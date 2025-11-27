@@ -1,0 +1,95 @@
+# World.gd
+extends Node2D
+
+@onready var map_sprite: Sprite2D = $MapContainer/CultureSprite
+@onready var camera: Camera2D = $Camera2D
+@onready var troop_renderer: Node2D = $MapContainer/TroopRenderer
+
+const MAP_SHADER = preload("res://shaders/map_shader.gdshader")
+
+var map_width: float = 0.0
+
+
+func _ready() -> void:
+	# MapManager is now an Autoload and handles everything itself
+	# Just connect to the signal (one-shot because it's emitted only once)
+	MapManager.map_ready.connect(_on_map_ready, CONNECT_ONE_SHOT)
+	
+	# If MapManager already finished loading (e.g. from cache), trigger immediately
+	if MapManager.id_map_image != null:
+		_on_map_ready()
+
+
+func _on_map_ready() -> void:
+	print("World: Map is ready → configuring visuals...")
+
+	map_width = MapManager.id_map_image.get_width()
+
+	# === 1. Setup Shader Material ===
+	var mat := ShaderMaterial.new()
+	mat.shader = MAP_SHADER
+	
+	var id_tex := ImageTexture.create_from_image(MapManager.id_map_image)
+	mat.set_shader_parameter("region_id_map", id_tex)
+	mat.set_shader_parameter("state_colors", MapManager.state_color_texture)
+	# You can use either regions.png or cultures.png as base — most people use regions for clarity
+	mat.set_shader_parameter("original_texture", map_sprite.texture)
+	mat.set_shader_parameter("tex_size", Vector2(map_width, MapManager.id_map_image.get_height()))
+	mat.set_shader_parameter("country_border_color", Color.BLACK)
+
+	map_sprite.material = mat
+
+	# === 2. Create Infinite Scroll Ghost Sprites ===
+	_create_ghost_map(Vector2(-map_width, 0), mat)
+	_create_ghost_map(Vector2(map_width, 0), mat)
+
+	# === 3. Configure Troop Renderer ===
+	if troop_renderer:
+		troop_renderer.map_sprite = map_sprite
+		troop_renderer.map_width = map_width
+	else:
+		push_error("TroopRenderer node not found!")
+
+	for c in ["turkey", "iraq", "bulgaria"]:
+		var provinces = MapManager.country_to_provinces.get(c, []).duplicate()
+		provinces.shuffle()
+		var selected_provinces = provinces.slice(0, min(5, provinces.size()))
+		for pid in selected_provinces:
+			TroopManager.create_troop(c, randi_range(1, 10), pid)
+	WarManager.declare_war("turkey", "bulgaria")
+	WarManager.declare_war("turkey", "iraq")
+	WarManager.declare_war("iraq", "bulgaria")
+
+
+	#for c in MapManager.country_to_provinces.keys():
+		#var provinces = MapManager.country_to_provinces[c].duplicate()
+		#provinces.shuffle()
+		#var num_troops = min(10, provinces.size())
+		#var selected_provinces = provinces.slice(0, num_troops)
+		#for pid in selected_provinces:
+			#TroopManager.create_troop(c, randi_range(1, 10), pid)
+
+
+func _create_ghost_map(offset: Vector2, material: ShaderMaterial) -> void:
+	var ghost := Sprite2D.new()
+	ghost.texture = map_sprite.texture
+	ghost.centered = map_sprite.centered
+	ghost.material = material
+	ghost.position = map_sprite.position + offset
+	$MapContainer.add_child(ghost)
+
+
+func _process(_delta: float) -> void:
+	# Infinite horizontal camera wrap
+	if camera.position.x > map_width:
+		camera.position.x -= map_width
+	elif camera.position.x < -map_width:
+		camera.position.x += map_width
+
+	# Hover update (uncomment when you're ready to use it)
+#	MapManager.update_hover(get_global_mouse_position(), map_sprite)
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		MapManager.handle_click(get_global_mouse_position(), map_sprite)

@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq47nwibqhw6h"]
+
+[ext_resource type="Texture2D" uid="uid://bd1tehujs0p3u" path="res://assets/flags/abkhazia_flag.png" id="1_mg4y4"]
+[ext_resource type="Script" uid="uid://brr8pe0aekthg" path="res://Scripts/TroopData.gd" id="1_vakmv"]
+
+[node name="PanelContainer" type="PanelContainer"]
+offset_right = 73.0
+offset_bottom = 31.0
+size_flags_horizontal = 4
+script = ExtResource("1_vakmv")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_mg4y4")
+expand_mode = 2
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+layout_mode = 2
+text = "323"
