@@ -1,28 +1,27 @@
 extends Node
 
-const SIGNAL_STATS_CHANGED = "stats_changed"
+signal stats_changed()
 
-var country_name: String = "iraq"
-var flag_texture: Texture2D = _get_flag(country_name)
+var country_name: String = "spain"
+var flag_texture: Texture2D = TroopManager.get_flag(country_name)
 
 #-------
 # Stats
-var political_power: float = 50.0
+var political_power: int = 0
 var stability: float = 0.75   # 0.0 → 1.0
-var dollars: float = 1000.0
+var money: int = 1000
 var manpower: int = 50000
 
 
 
 # Constants for now
-const MAX_STABILITY := 1.0
-const MIN_STABILITY := 0.0
-const POLITICAL_POWER_GAIN_DAILY := 2.0
-const DOLLAR_INCOME_DAILY := 480.0      # example: 20/hour * 24
-const MANPOWER_GROWTH_DAILY := 600       # example: 25/hour * 24
+var MIN_STABILITY := 0.0
+var MAX_STABILITY := 1.0
+var POLITICAL_POWER_GAIN_DAILY := 2.0
+var DOLLAR_INCOME_DAILY := 480.0      # example: 20/hour * 24
+var MANPOWER_GROWTH_DAILY := 600       # example: 25/hour * 24
 
 
-signal stats_changed()
 
 func _ready() -> void:
 	await get_tree().process_frame  # wait until all singletons are ready
@@ -35,14 +34,14 @@ func get_country():
 	return self.country_name.to_lower()
 
 # Connected to day_passed signal of gameclock
-func _on_day_passed(day) -> void:
+func _on_day_passed(day, month, year) -> void:
 	_update_daily_resources()
-	emit_signal(SIGNAL_STATS_CHANGED)
+	emit_signal("stats_changed")
 
 # Resource updates
 func _update_daily_resources() -> void:
 	_add_political_power(POLITICAL_POWER_GAIN_DAILY)
-	_add_dollars(DOLLAR_INCOME_DAILY)
+	_add_money(DOLLAR_INCOME_DAILY)
 	_add_manpower(MANPOWER_GROWTH_DAILY)
 	_update_stability_over_time()
 
@@ -70,13 +69,13 @@ func _update_stability_over_time() -> void:
 
 
 
-func _add_dollars(amount: float) -> void:
-	dollars += amount
+func _add_money(amount: float) -> void:
+	money += amount
 
 func spend_dollars(amount: float) -> bool:
-	if dollars < amount:
+	if money < amount:
 		return false
-	dollars -= amount
+	money -= amount
 	return true
 
 
@@ -89,31 +88,40 @@ func spend_manpower(amount: int) -> bool:
 	manpower -= amount
 	return true
 
-func _get_flag(country):
-	var path = "res://assets/flags/%s_flag.png" % country.to_lower()
-	if ResourceLoader.exists(path):
-		var image = Image.new()
-		var error = image.load(path)
-		if error == OK:
-			var texture = ImageTexture.new()
-			texture.create_from_image(image)
-			return texture
-		else:
-			print("Failed to load image: ", path)
-			return null
-	else:
-		print("Resource does not exist: ", path)
-		return null
-
-
 
 func setup_player_country(_name: String, _flagName: String) -> void:
 	country_name = _name
 	#flag_texture = DataManager.get_country_flag(country_name) 
 	print("Player country set to:", country_name)
-	emit_signal(SIGNAL_STATS_CHANGED)
+	emit_signal("stats_changed")
 
 
+
+func format_k(number: int) -> String:
+	if number >= 1000:
+		return str(number / 1000) + "k"
+	else:
+		return str(number)
+
+
+# 1. Returns a Dictionary → use this for UI updates
+func get_stats() -> Dictionary:
+	return {
+		"political_power": political_power,
+		"manpower": manpower,
+		"money": money,
+		"stability": stability,
+	}
+
+func get_stats_string () -> Dictionary:
+	return {
+		"political_power": str(political_power),
+		"stability": str(stability * 100.0),
+		"money": format_k(money),
+		"manpower": format_k(manpower)
+		
+	}
+	
 
 # Helper
 func get_summary() -> Dictionary:
@@ -122,6 +130,6 @@ func get_summary() -> Dictionary:
 		"flag": flag_texture,
 		"political_power": int(political_power),
 		"stability": int(stability * 100.0),
-		"dollars": int(dollars),
+		"money": int(money),
 		"manpower": manpower
 	}

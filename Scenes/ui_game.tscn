@@ -1,0 +1,293 @@
+[gd_scene load_steps=13 format=3 uid="uid://dgfixe44dvfny"]
+
+[ext_resource type="Script" uid="uid://dqvjehbri1br0" path="res://Scenes/ui_game.gd" id="1_rp7y5"]
+[ext_resource type="Texture2D" uid="uid://bd1tehujs0p3u" path="res://assets/flags/abkhazia_flag.png" id="1_xar7q"]
+[ext_resource type="Texture2D" uid="uid://blu52vb3afbc1" path="res://assets/icons/political_power_icon.png" id="2_xsn6u"]
+[ext_resource type="Texture2D" uid="uid://vmj131bo8hna" path="res://assets/icons/man_power_icon.png" id="3_liin1"]
+[ext_resource type="Texture2D" uid="uid://ckpgpc1x6ceh4" path="res://assets/icons/money_icon.png" id="4_dw8mh"]
+[ext_resource type="Texture2D" uid="uid://bxtbl3puq8nwe" path="res://assets/icons/industry_icon.png" id="5_rp7y5"]
+[ext_resource type="Texture2D" uid="uid://c6fo2o462ff25" path="res://assets/icons/nonaligned_icon.png" id="6_okksu"]
+[ext_resource type="Texture2D" uid="uid://d0jobkwbqofhx" path="res://assets/icons/liberal_icon.png" id="8_okksu"]
+[ext_resource type="Texture2D" uid="uid://2dhnim3tchpf" path="res://assets/icons/unmerge_icon.png" id="9_mdiyr"]
+[ext_resource type="Texture2D" uid="uid://ddbgdqwtqoole" path="res://assets/icons/plus_icon.png" id="10_lnl2f"]
+[ext_resource type="Texture2D" uid="uid://bggny42m0dmo1" path="res://assets/icons/minus_icon.png" id="11_6bnrr"]
+[ext_resource type="FontFile" uid="uid://cee8mbnpx3w3h" path="res://font/arial.TTF" id="12_6bnrr"]
+
+[node name="UI" type="CanvasLayer"]
+script = ExtResource("1_rp7y5")
+
+[node name="Topbar" type="ColorRect" parent="."]
+offset_right = 1153.0
+offset_bottom = 35.0
+size_flags_horizontal = 0
+color = Color(0.09803922, 0.09803922, 0.09803922, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Topbar"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -14.0
+offset_right = 545.0
+offset_bottom = 14.0
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Topbar/MarginContainer"]
+layout_mode = 2
+
+[node name="nation_flag" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("1_xar7q")
+expand_mode = 3
+
+[node name="icon_politicalpower" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_xsn6u")
+expand_mode = 3
+
+[node name="label_politicalpower" type="Label" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="icon_manpower" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("3_liin1")
+expand_mode = 3
+
+[node name="label_manpower" type="Label" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="icon_money" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("4_dw8mh")
+expand_mode = 3
+
+[node name="label_money" type="Label" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="icon_industry" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("5_rp7y5")
+expand_mode = 3
+
+[node name="label_industry" type="Label" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="icon_stability" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("6_okksu")
+expand_mode = 3
+
+[node name="label_stability" type="Label" parent="Topbar/MarginContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "100"
+
+[node name="MarginContainer2" type="MarginContainer" parent="Topbar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -264.0
+offset_right = -1.0
+offset_bottom = 35.0
+grow_horizontal = 0
+
+[node name="ColorRect" type="ColorRect" parent="Topbar/MarginContainer2"]
+layout_mode = 2
+color = Color(0, 0, 0, 1)
+
+[node name="TextureRect" type="TextureRect" parent="Topbar/MarginContainer2/ColorRect"]
+layout_mode = 0
+offset_left = 173.0
+offset_right = 208.0
+offset_bottom = 35.0
+texture = ExtResource("8_okksu")
+expand_mode = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="Topbar/MarginContainer2/ColorRect"]
+layout_mode = 0
+offset_left = 173.0
+offset_right = 263.0
+offset_bottom = 35.0
+tooltip_text = "World tension meter"
+
+[node name="MarginContainer" type="MarginContainer" parent="Topbar/MarginContainer2/ColorRect"]
+layout_mode = 0
+offset_right = 161.0
+offset_bottom = 35.0
+
+[node name="label_date" type="Label" parent="Topbar/MarginContainer2/ColorRect/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 21
+
+[node name="label_tension" type="Label" parent="Topbar/MarginContainer2/ColorRect"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -11.5
+offset_bottom = 11.5
+grow_horizontal = 0
+grow_vertical = 2
+text = "20%"
+
+[node name="GameSpeedControl" type="VBoxContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.961
+anchor_top = 0.07300001
+anchor_right = 0.99100006
+anchor_bottom = 0.18400002
+offset_left = -0.072021484
+offset_top = -0.30400467
+offset_right = 23.36792
+offset_bottom = 47.76799
+grow_horizontal = 0
+scale = Vector2(0.6, 0.6)
+
+[node name="Plus" type="Button" parent="GameSpeedControl"]
+layout_mode = 2
+tooltip_text = "Increase game speed"
+action_mode = 0
+icon = ExtResource("10_lnl2f")
+flat = true
+
+[node name="Minus" type="Button" parent="GameSpeedControl"]
+layout_mode = 2
+tooltip_text = "Decrease game speed"
+icon = ExtResource("11_6bnrr")
+flat = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 592.0
+offset_top = 531.0
+offset_right = 632.0
+offset_bottom = 614.0
+theme_override_font_sizes/font_size = 60
+text = "A"
+
+[node name="Button" type="Button" parent="."]
+offset_left = 516.0
+offset_top = 546.0
+offset_right = 574.0
+offset_bottom = 604.0
+toggle_mode = true
+icon = ExtResource("9_mdiyr")
+
+[node name="Sidemenu" type="ColorRect" parent="."]
+offset_top = 35.0
+offset_right = 268.0
+offset_bottom = 648.0
+color = Color(0.19607843, 0.19607843, 0.19607843, 1)
+
+[node name="ManPowerIcon" type="Sprite2D" parent="Sidemenu"]
+position = Vector2(206, 231)
+texture = ExtResource("3_liin1")
+
+[node name="PoliticalPowerIcon" type="Sprite2D" parent="Sidemenu"]
+position = Vector2(67, 232)
+texture = ExtResource("2_xsn6u")
+
+[node name="MoneyIcon" type="Sprite2D" parent="Sidemenu"]
+position = Vector2(135, 233)
+texture = ExtResource("4_dw8mh")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Sidemenu"]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 269.0
+offset_right = 259.0
+offset_bottom = 319.0
+
+[node name="ColorRect" type="ColorRect" parent="Sidemenu/HBoxContainer"]
+custom_minimum_size = Vector2(200, 10)
+layout_mode = 2
+color = Color(0.19607843, 0.19607843, 0.19607843, 1)
+
+[node name="Label" type="Label" parent="Sidemenu/HBoxContainer/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -9.5
+offset_right = 20.0
+offset_bottom = 9.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "Diplomacy Actions"
+
+[node name="TextureRect" type="TextureRect" parent="Sidemenu/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("2_xsn6u")
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Sidemenu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -127.5
+offset_top = 17.0
+offset_right = 127.5
+offset_bottom = 301.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ActionsList" type="VBoxContainer" parent="Sidemenu/ScrollContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Sidemenu"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -62.5
+offset_top = 8.0
+offset_right = 62.5
+offset_bottom = 37.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("12_6bnrr")
+theme_override_font_sizes/font_size = 24
+text = "country1"
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="Sidemenu"]
+custom_minimum_size = Vector2(180, 90)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -90.0
+offset_top = 45.0
+offset_right = 90.0
+offset_bottom = 135.0
+grow_horizontal = 2
+texture = ExtResource("1_xar7q")
+expand_mode = 1
+
+[node name="Label2" type="Label" parent="Sidemenu"]
+layout_mode = 0
+offset_left = 46.0
+offset_top = 153.0
+offset_right = 176.0
+offset_bottom = 192.0
+theme_override_font_sizes/font_size = 22
+text = "Military Access: No"
+
+[connection signal="mouse_entered" from="GameSpeedControl/Plus" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_entered" from="GameSpeedControl/Minus" to="." method="_on_button_mouse_entered"]

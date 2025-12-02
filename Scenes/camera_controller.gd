@@ -5,7 +5,7 @@ extends Node
 
 @export var base_speed: float = 500.0
 @export var zoom_speed: float = 0.6
-@export var min_zoom: float = 1
+@export var min_zoom: float = 0.6
 @export var max_zoom: float = 15
 
 func _process(delta: float) -> void:

@@ -2,23 +2,43 @@
 extends Node
 
 var music_player: AudioStreamPlayer
-enum SFX {
+
+
+enum SFX {	
 	TROOP_MOVE,
 	TROOP_SELECTED,
 	BATTLE_START,
 	OPEN_MENU,
 	DECLARE_WAR,
 	HOVERED,
+	CLOSE_MENU,
 }
 enum MUSIC {
 	MAIN_THEME,
 	BATTLE_THEME
 }
 
+var sfx_volume_map = {
+	SFX.TROOP_MOVE: 0.1,
+	SFX.TROOP_SELECTED: 1.6,
+	SFX.BATTLE_START: 0.8,
+	SFX.OPEN_MENU: 0.5,
+	SFX.CLOSE_MENU: 0.5,
+	SFX.DECLARE_WAR: 0.9,
+	SFX.HOVERED: 0.3
+}
+
+var music_volume_map = {
+	MUSIC.MAIN_THEME: 0.4,
+	MUSIC.BATTLE_THEME: 0.5
+}
+
+
 var sfx_map = {
 	SFX.TROOP_MOVE: preload("res://assets/snd/moveDivSound.mp3"),
 	SFX.TROOP_SELECTED: preload("res://assets/snd/selectDivSound.mp3"),
 	SFX.OPEN_MENU: preload("res://assets/snd/openMenuSound.mp3"),
+	SFX.CLOSE_MENU: preload("res://assets/snd/closeMenuSound.mp3"),
 	SFX.DECLARE_WAR: preload("res://assets/snd/declareWarSound.mp3"),
 	SFX.HOVERED: preload("res://assets/snd/hoveredSound.mp3")
 }
@@ -50,18 +70,17 @@ func play_sfx(sfx: int):
 	if sfx not in sfx_map:
 		return
 	
-	# Find first available (stopped) player
 	var player = null
 	for p in sfx_players:
 		if not p.playing:
 			player = p
 			break
 	
-	# If none available, use the first one (overwrites oldest)
 	if not player:
 		player = sfx_players[0]
 	
 	player.stream = sfx_map[sfx]
+	player.volume_db = linear_to_db(sfx_volume_map.get(sfx, 1.0))
 	player.play()
 
 func play_music(track: int, loop: bool = true):
@@ -69,6 +88,7 @@ func play_music(track: int, loop: bool = true):
 		return
 	
 	music_player.stream = music_map[track]
+	music_player.volume_db = linear_to_db(music_volume_map.get(track, 1.0))  # Apply track-specific volume
 	music_player.play()
 
 # *** BONUS: Stop all SFX ***

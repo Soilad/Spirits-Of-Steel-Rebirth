@@ -17,14 +17,16 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-MusicManager="*res://Managers/MusicManager.gd"
 MapManager="*res://Managers/MapManager.gd"
-MapDebugOverlay="*res://Managers/MapDebugOverlay.gd"
 MainClock="*res://Managers/MainClock.gd"
 TroopManager="*res://Managers/TroopManager.gd"
-SelectionManager="*res://Managers/SelectionManager.gd"
 CurrentPlayer="*res://Managers/CurrentPlayer.gd"
+MusicManager="*res://Managers/MusicManager.gd"
+MapDebugOverlay="*res://Managers/MapDebugOverlay.gd"
+SelectionManager="*res://Managers/SelectionManager.gd"
 WarManager="*res://Managers/WarManager.gd"
+PopupManager="*res://Managers/PopupManager.gd"
+KeyboardManager="*res://Managers/KeyboardManager.gd"
 
 [display]
 
@@ -34,6 +36,10 @@ window/stretch/aspect="expand"
 [global_group]
 
 TroopRenderer=""
+
+[gui]
+
+theme/custom_font="uid://cee8mbnpx3w3h"
 
 [input]
 
@@ -55,6 +61,11 @@ move_up={
 move_down={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":83,"key_label":0,"unicode":115,"location":0,"echo":false,"script":null)
+]
+}
+open_menu={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":32,"location":0,"echo":false,"script":null)
 ]
 }
 

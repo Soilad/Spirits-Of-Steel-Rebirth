@@ -1,7 +1,7 @@
 [gd_scene load_steps=9 format=3 uid="uid://bonl378c51366"]
 
 [ext_resource type="Script" uid="uid://pcq6svrgye6v" path="res://Scenes/world.gd" id="1_go701"]
-[ext_resource type="PackedScene" uid="uid://dgfixe44dvfny" path="res://Scenes/ui_topbar.tscn" id="2_fo5ed"]
+[ext_resource type="PackedScene" uid="uid://dgfixe44dvfny" path="res://Scenes/ui_game.tscn" id="2_fo5ed"]
 [ext_resource type="Texture2D" uid="uid://b1bonv2ujcxxi" path="res://maps/cultures.png" id="2_go701"]
 [ext_resource type="Texture2D" uid="uid://ct2rdn4ldt5ks" path="res://maps/regions.png" id="3_5a7ea"]
 [ext_resource type="Script" uid="uid://cvkc8n0kgyk3c" path="res://Scenes/camera_controller.gd" id="4_8j60k"]

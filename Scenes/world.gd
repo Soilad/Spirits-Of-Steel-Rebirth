@@ -18,6 +18,7 @@ func _ready() -> void:
 	# If MapManager already finished loading (e.g. from cache), trigger immediately
 	if MapManager.id_map_image != null:
 		_on_map_ready()
+	
 
 
 func _on_map_ready() -> void:
@@ -49,16 +50,21 @@ func _on_map_ready() -> void:
 		troop_renderer.map_width = map_width
 	else:
 		push_error("TroopRenderer node not found!")
+	
+	
+	CurrentPlayer.country_name = "spain"
 
-	for c in ["turkey", "iraq", "bulgaria"]:
+	for c in ["netherlands", "france", "portugal", "spain", "germany"]:
 		var provinces = MapManager.country_to_provinces.get(c, []).duplicate()
 		provinces.shuffle()
 		var selected_provinces = provinces.slice(0, min(5, provinces.size()))
 		for pid in selected_provinces:
 			TroopManager.create_troop(c, randi_range(1, 10), pid)
-	WarManager.declare_war("turkey", "bulgaria")
-	WarManager.declare_war("turkey", "iraq")
-	WarManager.declare_war("iraq", "bulgaria")
+	#WarManager.declare_war("turkey", "bulgaria")
+	#WarManager.declare_war("turkey", "iraq")
+	#WarManager.declare_war("iraq", "bulgaria")
+	#PopupManager.show_alert('war', 'netherlands', 'france')
+
 
 
 	#for c in MapManager.country_to_provinces.keys():
@@ -91,5 +97,5 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+	if event is InputEventMouseButton and !event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		MapManager.handle_click(get_global_mouse_position(), map_sprite)

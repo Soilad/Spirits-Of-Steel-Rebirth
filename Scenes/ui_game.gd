@@ -1,0 +1,193 @@
+extends CanvasLayer
+
+enum MenuContext { SELF, WAR, DIPLOMACY }
+
+# ── Top Bar Nodes ─────────────────────────────────────
+@onready var nation_flag: TextureRect = $Topbar/MarginContainer/HBoxContainer/nation_flag
+@onready var label_date: Label = $Topbar/MarginContainer2/ColorRect/MarginContainer/label_date
+@onready var label_merge: Label = $Label
+@onready var label_politicalpower: Label = $Topbar/MarginContainer/HBoxContainer/label_politicalpower
+@onready var label_manpower: Label = $Topbar/MarginContainer/HBoxContainer/label_manpower
+@onready var label_money: Label = $Topbar/MarginContainer/HBoxContainer/label_money
+@onready var label_industry: Label = $Topbar/MarginContainer/HBoxContainer/label_industry
+@onready var label_stability: Label = $Topbar/MarginContainer/HBoxContainer/label_stability
+
+# ── Side Menu Nodes ───────────────────────────────────
+@onready var sidemenu: Control = $Sidemenu
+@onready var sidemenu_flag: TextureRect = $Sidemenu/TextureRect
+@onready var label_country_sidemenu: Label = $Sidemenu/Label
+@onready var actions_container: VBoxContainer = $Sidemenu/ScrollContainer/ActionsList
+
+@export var action_scene: PackedScene = preload("res://Scenes/action.tscn")
+@export var label_merge_status: Label
+
+
+
+# Animation
+@export var slide_duration: float = 0.2
+var is_open := false
+var pos_open := Vector2.ZERO
+var pos_closed := Vector2.ZERO
+
+var selected_country: String = ""
+# Menu Data
+var menus := {
+	MenuContext.SELF: [
+		{"text": "Decisions",       "cost": 0,  "func": "open_decisions_tree"},
+		{"text": "Research",          "cost": 0,  "func": "open_research_tree"},
+		{"text": "Releasables", "cost": 0,  "func": "_improve_relations"}
+	],
+	MenuContext.WAR: [
+		{"text": "Propose Ceasefire", "cost": 50, "func": "_propose_peace"},
+		{"text": "Propose a Deal", "cost": 50, "func": "_launch_nuke"},
+	],
+	MenuContext.DIPLOMACY: [
+		{"text": "Declare War",       "cost": 25, "func": "_declare_war"},
+		{"text": "Improve Relations", "cost": 15, "func": "_improve_relations"},
+		{"text": "Form Alliance",     "cost": 80, "func": "_form_alliance"},
+		{"text": "Demand Tribute",    "cost": 40, "func": "_demand_tribute"},
+	]
+}
+
+func _ready() -> void:
+	pos_open = sidemenu.position
+	pos_closed = Vector2(pos_open.x - sidemenu.size.x, pos_open.y)
+	sidemenu.position = pos_closed
+	
+	await get_tree().process_frame  # Wait for singletons
+	
+	_connect_signals()
+	_update_ui()
+
+
+@onready var plus: Button = $GameSpeedControl/Plus
+@onready var minus: Button = $GameSpeedControl/Minus
+func _connect_signals() -> void:
+	if CurrentPlayer:
+		CurrentPlayer.stats_changed.connect(_on_stats_changed)
+	if MainClock:
+		MainClock.hour_passed.connect(_on_time_passed)
+	if MapManager:
+		MapManager.province_clicked.connect(_on_province_clicked)
+	if KeyboardManager:
+		KeyboardManager.toggle_menu.connect(toggle_menu)
+		
+	plus.pressed.connect(_on_speed_button_pressed.bind(true))
+	minus.pressed.connect(_on_speed_button_pressed.bind(false))
+
+
+
+func _on_province_clicked(pid: int, country: String) -> void:
+	selected_country = country        
+	sidemenu_flag.texture = TroopManager.get_flag(country)
+	label_country_sidemenu.text = country
+	
+	if country == CurrentPlayer.country_name:
+		open_menu(MenuContext.SELF)
+	elif WarManager.is_at_war(CurrentPlayer.country_name, country):
+		open_menu(MenuContext.WAR)
+	else:
+		open_menu(MenuContext.DIPLOMACY)
+
+func toggle_menu(context := MenuContext.SELF) -> void:
+	if is_open:
+		close_menu()
+	else:
+		selected_country = CurrentPlayer.country_name   # ← For SELF menu
+		label_country_sidemenu.text = CurrentPlayer.country_name
+		sidemenu_flag.texture = nation_flag.texture
+		open_menu(context)
+
+# ── Menu Control ──────────────────────────────────────
+func open_menu(context: MenuContext) -> void:
+	build_menu(context)
+	slide_in()
+	MusicManager.play_sfx(MusicManager.SFX.OPEN_MENU)
+
+func close_menu() -> void:
+	slide_out()
+	MusicManager.play_sfx(MusicManager.SFX.CLOSE_MENU)
+		
+
+func slide_in() -> void:
+	if is_open: return
+	is_open = true
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
+	tween.tween_property(sidemenu, "position", pos_open, slide_duration)
+
+func slide_out() -> void:
+	if not is_open: return
+	is_open = false
+	var tween = create_tween().set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	tween.tween_property(sidemenu, "position", pos_closed, slide_duration)
+
+func build_menu(context: MenuContext) -> void:
+	for child in actions_container.get_children():
+		child.queue_free()
+	
+	for item in menus.get(context, []):
+		var btn = action_scene.instantiate()
+		actions_container.add_child(btn)
+		btn.setup(item.text, item.cost, Callable(self, item.func))
+	
+	_refresh_buttons()
+
+func _refresh_buttons() -> void:
+	if not is_open: return
+	var pp = CurrentPlayer.get_stats().get("political_power", 0)
+	for btn in actions_container.get_children():
+		if btn.has_method("check_affordability"):
+			btn.check_affordability(pp)
+
+# ── UI Updates ────────────────────────────────────────
+func _update_ui() -> void:
+	_update_flag()
+	_update_merge_label()
+	_on_time_passed()
+	_on_stats_changed()
+
+func _on_stats_changed() -> void:
+	var s = CurrentPlayer.get_stats()
+	label_politicalpower.text = str(s.get("political_power", 0))
+	label_manpower.text       = str(s.get("manpower", 0))
+	label_money.text          = str(s.get("money", 0))
+	label_stability.text      = str(s.get("stability", 0))
+	_refresh_buttons()
+
+func _on_time_passed(_h := 0) -> void:
+	label_date.text = MainClock.get_datetime_string()
+
+func _update_flag() -> void:
+	var country = CurrentPlayer.get_country()
+	if country.is_empty(): return
+	var path = "res://assets/flags/%s_flag.png" % country.to_lower()
+	if ResourceLoader.exists(path):
+		nation_flag.texture = load(path)
+
+func _update_merge_label() -> void:
+	if label_merge_status:
+		label_merge_status.text = "A" if TroopManager.AUTO_MERGE else "M"
+
+# ── Action Callbacks ──────────────────────────────────
+func _declare_war():
+	WarManager.declare_war(CurrentPlayer.country_name, selected_country)
+	open_menu(MenuContext.WAR)
+func _send_aid():         print("Sending aid!")
+func _improve_relations(): print("Improving relations")
+func _propose_peace():    print("Proposing peace")
+func _launch_nuke():      print("NUKE!")
+func _surrender():        print("We surrender...")
+func _form_alliance():    print("Alliance formed")
+func _demand_tribute():   print("Pay up!")
+
+
+
+
+
+func _on_speed_button_pressed(increase: bool):
+	print (increase)
+	if increase: MainClock.increaseSpeed()
+	else: MainClock.decreaseSpeed()
+
+func _on_button_mouse_entered() -> void:
+	MusicManager.play_sfx(MusicManager.SFX.HOVERED)

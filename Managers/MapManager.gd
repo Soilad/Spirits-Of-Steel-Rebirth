@@ -283,6 +283,12 @@ func get_province_at_pos(pos: Vector2, map_sprite: Sprite2D = null) -> int:
 	return r + (g * 256)
 
 func update_hover(global_pos: Vector2, map_sprite: Sprite2D) -> void:
+	if _is_mouse_over_ui():         
+		if last_hovered_pid > 1:
+			_update_lookup(last_hovered_pid, original_hover_color)
+			last_hovered_pid = -1
+		return
+	
 	var pid = get_province_at_pos(global_pos, map_sprite)
 	if pid != last_hovered_pid:
 		if last_hovered_pid > 1:
@@ -292,11 +298,15 @@ func update_hover(global_pos: Vector2, map_sprite: Sprite2D) -> void:
 			var col = state_color_image.get_pixel(pid, 0)
 			original_hover_color = col
 			_update_lookup(pid, col + Color(0.15, 0.15, 0.15, 0))
-			#print (province_centers[pid])
-			province_hovered.emit(pid, province_to_country.get(pid, ""))
-		
+		province_hovered.emit(pid, province_to_country.get(pid, ""))
+
+
+
 
 func handle_click(global_pos: Vector2, map_sprite: Sprite2D) -> void:
+	if _is_mouse_over_ui():          
+		return                        
+	
 	var pid = get_province_at_pos(global_pos, map_sprite)
 	if pid > 1:
 		province_clicked.emit(pid, province_to_country.get(pid, ""))
@@ -429,47 +439,68 @@ func _get_pid_fast(x: int, y: int) -> int:
 
 
 
-# === CACHED A* PATHFINDING ===
-func find_path(start_pid: int, end_pid: int) -> Array[int]:
+# === CACHED A* PATHFINDING (MODIFIED) ===
+
+# Added 'allowed_countries' parameter. Defaults to empty [] (no restrictions).
+func find_path(start_pid: int, end_pid: int, allowed_countries: Array[String] = []) -> Array[int]:
 	if start_pid == end_pid:
 		return [start_pid]
 
 	if not adjacency_list.has(start_pid) or not adjacency_list.has(end_pid):
 		return []
 
-	# --- CHECK CACHE FIRST ---
-	var cache_key = _get_cache_key(start_pid, end_pid)
-	if path_cache.has(cache_key):
-		return path_cache[cache_key].duplicate()
+	# --- CACHE LOGIC ---
+	# Only use cache if there are NO restrictions. 
+	# Dynamic restrictions are too complex to cache efficiently without bloating memory.
+	var use_cache = allowed_countries.is_empty()
+	var cache_key = ""
+
+	if use_cache:
+		cache_key = _get_cache_key(start_pid, end_pid)
+		if path_cache.has(cache_key):
+			return path_cache[cache_key].duplicate()
 
 	# --- CALCULATE PATH ---
-	var path = _find_path_astar(start_pid, end_pid)
+	var path = _find_path_astar(start_pid, end_pid, allowed_countries)
 
 	# --- STORE IN CACHE ---
-	path_cache[cache_key] = path.duplicate()
+	# Only cache if this was a standard, unrestricted path
+	if use_cache:
+		path_cache[cache_key] = path.duplicate()
 
 	return path
 
 
-func _find_path_astar(start_pid: int, end_pid: int) -> Array[int]:
-	"""
-	Core A* implementation (now optimized with better data structures)
-	"""
+func _find_path_astar(start_pid: int, end_pid: int, allowed_countries: Array[String]) -> Array[int]:
+	
+	# 1. Optimize Allowed Check: Convert Array to Dictionary for O(1) lookup
+	var allowed_dict = {}
+	var restricted_mode = not allowed_countries.is_empty()
+	if restricted_mode:
+		for c in allowed_countries:
+			allowed_dict[c] = true
+			
+	# 2. Standard A* Setup
 	var open_set: Array[int] = [start_pid]
 	var came_from: Dictionary = {}
 	var g_score: Dictionary = {}
 	var f_score: Dictionary = {}
-	var open_set_hash: Dictionary = {start_pid: true} # O(1) membership test
+	var open_set_hash: Dictionary = {start_pid: true} 
+
+	# 3. "Go as near as you can" tracking
+	# We track the node with the lowest distance (heuristic) to the target
+	var closest_pid_so_far = start_pid
+	var closest_dist_so_far = _heuristic(start_pid, end_pid)
 
 	for pid in adjacency_list.keys():
 		g_score[pid] = INF
 		f_score[pid] = INF
 
 	g_score[start_pid] = 0
-	f_score[start_pid] = _heuristic(start_pid, end_pid)
+	f_score[start_pid] = closest_dist_so_far
 
 	while open_set.size() > 0:
-		# Find node with lowest f_score
+		# Standard: Find node with lowest f_score
 		var current = open_set[0]
 		var best_idx = 0
 		var best_f = f_score[current]
@@ -481,15 +512,34 @@ func _find_path_astar(start_pid: int, end_pid: int) -> Array[int]:
 				current = open_set[i]
 				best_idx = i
 
-		# Remove from open set (swap and pop for efficiency)
+		# Pop current
 		open_set[best_idx] = open_set[-1]
 		open_set.pop_back()
 		open_set_hash.erase(current)
 
+		# Success!
 		if current == end_pid:
 			return _reconstruct_path(came_from, current)
 
+		# Track closest node (Fallback logic)
+		# If we are closer to the target than ever before, record this PID
+		var dist_to_target = _heuristic(current, end_pid)
+		if dist_to_target < closest_dist_so_far:
+			closest_dist_so_far = dist_to_target
+			closest_pid_so_far = current
+
 		for neighbor in adjacency_list[current]:
+			
+			# --- NEW RESTRICTION CHECK ---
+			if restricted_mode:
+				var n_country = province_to_country.get(neighbor, "")
+				# If neighbor belongs to a country NOT in the list, skip it.
+				# Note: We allow the neighbor if it IS the target (optional, depends on game rules)
+				# But per your request "only go THAT far", we strictly block it.
+				if not allowed_dict.has(n_country):
+					continue
+			# -----------------------------
+
 			var tentative_g = g_score[current] + 1
 			
 			if tentative_g < g_score[neighbor]:
@@ -500,6 +550,12 @@ func _find_path_astar(start_pid: int, end_pid: int) -> Array[int]:
 				if not open_set_hash.has(neighbor):
 					open_set.append(neighbor)
 					open_set_hash[neighbor] = true
+
+	# If we get here, the path to end_pid is impossible (blocked by borders).
+	# Instead of returning empty [], we return the path to the CLOSEST point we reached.
+	if restricted_mode and closest_pid_so_far != start_pid:
+		# print("Path blocked! Going to closest valid province: ", closest_pid_so_far)
+		return _reconstruct_path(came_from, closest_pid_so_far)
 
 	return []
 
@@ -558,6 +614,10 @@ func get_cache_size() -> int:
 func print_cache_stats() -> void:
 	"""Print cache statistics"""
 	print("Path Cache Stats: %d paths cached" % path_cache.size())
+
+func _is_mouse_over_ui() -> bool:
+	var hovered = get_viewport().gui_get_hovered_control()
+	return hovered != null
 
 # Your color → country definition
 const COUNTRY_COLORS := {

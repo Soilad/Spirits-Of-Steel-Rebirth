@@ -31,7 +31,15 @@ var max_path_length: int = 0
 
 func _input(event) -> void:
 	if not map_sprite: return
-	
+
+	# ───── NEW: BLOCK INPUT WHEN MOUSE IS OVER UI ─────
+	if event is InputEventMouseButton or event is InputEventMouseMotion:
+		var hovered_ui = get_viewport().gui_get_hovered_control()
+		if hovered_ui != null:
+			# Mouse is over a button, label, panel, sidemenu, etc. → ignore map input
+			return
+	# ─────────────────────────────────────────────────────
+
 	# LEFT CLICK: Selection
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		_handle_left_mouse(event)

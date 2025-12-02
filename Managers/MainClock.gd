@@ -83,7 +83,6 @@ func _tick_day() -> void:
 	date_dict = Time.get_datetime_dict_from_unix_time(
 		Time.get_unix_time_from_datetime_dict(date_dict) + (24 * 60 * 60)
 	)
-	
 	emit_signal("day_passed", date_dict.year, date_dict.month, date_dict.day)
 
 	# Check for Month/Year change and emit signals
