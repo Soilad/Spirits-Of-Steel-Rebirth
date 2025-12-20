@@ -39,8 +39,8 @@ func _on_map_ready() -> void:
 	map_sprite.material = mat
 
 	# === 2. Create Infinite Scroll Ghost Sprites ===
-	_create_ghost_map(Vector2(-map_width, 0), mat)
-	_create_ghost_map(Vector2(map_width, 0), mat)
+	# _create_ghost_map(Vector2(-map_width, 0), mat)
+	# _create_ghost_map(Vector2(map_width, 0), mat)
 
 	# === 3. Configure Troop Renderer ===
 	if troop_renderer:
@@ -66,21 +66,21 @@ func _on_map_ready() -> void:
 	#PopupManager.show_alert('war', 'netherlands', 'france')
 
 
-func _create_ghost_map(offset: Vector2, p_material: ShaderMaterial) -> void:
-	var ghost := Sprite2D.new()
-	ghost.texture = map_sprite.texture
-	ghost.centered = map_sprite.centered
-	ghost.material = p_material
-	ghost.position = map_sprite.position + offset
-	$MapContainer.add_child(ghost)
+# func _create_ghost_map(offset: Vector2, p_material: ShaderMaterial) -> void:
+# 	var ghost := Sprite2D.new()
+# 	ghost.texture = map_sprite.texture
+# 	ghost.centered = map_sprite.centered
+# 	ghost.material = p_material
+# 	ghost.position = map_sprite.position + offset
+# 	$MapContainer.add_child(ghost)
 
 
-func _process(_delta: float) -> void:
+# func _process(_delta: float) -> void:
 	# Infinite horizontal camera wrap
-	if camera.position.x > map_width:
-		camera.position.x -= map_width
-	elif camera.position.x < -map_width:
-		camera.position.x += map_width
+	# if camera.position.x > map_sprite.position.x + map_width:
+	# 	camera.position.x -= map_width
+	# elif camera.position.x < map_sprite.position.x - map_width:
+	# 	camera.position.x += map_width
 
 
 func _input(event: InputEvent) -> void:

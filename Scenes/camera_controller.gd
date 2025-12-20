@@ -20,6 +20,7 @@ func _process(delta: float) -> void:
 		var zoom_factor := camera.zoom.x
 		camera.position += velocity * (base_speed / zoom_factor) * delta
 
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		var mouse_world_before = camera.get_global_mouse_position()
