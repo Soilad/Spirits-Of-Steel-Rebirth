@@ -12,13 +12,13 @@ var map_width: float = 0.0
 
 func _ready() -> void:
 	#MapManager.map_ready.connect(_on_map_ready, CONNECT_ONE_SHOT)
+
 	await get_tree().process_frame # wait for Managers (singletons) to load
 	
 	if MapManager.id_map_image != null:
 		_on_map_ready()
 
 
-# NOTE(pol): Misleading message and func name, this inits the map
 func _on_map_ready() -> void:
 	print("World: Map is ready → configuring visuals...")
 
@@ -59,6 +59,7 @@ func _on_map_ready() -> void:
 		var selected_provinces = provinces.slice(0, min(5, provinces.size()))
 		for pid in selected_provinces:
 			TroopManager.create_troop(c, randi_range(1, 10), pid)
+
 	#WarManager.declare_war("turkey", "bulgaria")
 	#WarManager.declare_war("turkey", "iraq")
 	#WarManager.declare_war("iraq", "bulgaria")

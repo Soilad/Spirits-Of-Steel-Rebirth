@@ -98,7 +98,7 @@ func _draw() -> void:
 		for i in range(stack_size):
 			var t = stack[i]
 			# Position the bottom troop at the center of the province
-			var troop_position = base_pos - map_offset
+			var troop_position = base_pos + map_sprite.position
 			
 			# Calculate the vertical offset for the current badge in the stack
 			var current_y_offset = start_y_offset - (i * scaled_offset)

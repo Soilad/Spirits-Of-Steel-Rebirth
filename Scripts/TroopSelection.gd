@@ -88,7 +88,7 @@ func _perform_selection() -> void:
 
 	var world_rect := Rect2(drag_start, drag_end - drag_start).abs()
 	var texture_width := map_sprite.texture.get_width()
-	var offset := map_sprite.texture.get_size() * 0.5
+	# var offset := map_sprite.texture.get_size() * 0.5
 	var cam = get_viewport().get_camera_2d()
 	var inv_zoom = 1.0 / cam.zoom.x if cam else 1.0
 
@@ -108,7 +108,7 @@ func _perform_selection() -> void:
 		var w = flag_size.x + (GAP_BASE * inv_zoom) + text_size.x + (pad * 2)
 		var h = max(flag_size.y, text_size.y) + (pad * 2)
 		var box_size = Vector2(w, h)
-		var troop_world_center = t.position - offset
+		var troop_world_center = t.position + map_sprite.position
 		var troop_rect = Rect2(troop_world_center - box_size * 0.5, box_size)
 
 		if _check_rect_intersection(world_rect, troop_rect, t.position.x, texture_width):
@@ -179,16 +179,19 @@ func _sample_province_under_mouse() -> void:
 		return
 	# -----------------------
 
-	var local_pos = map_sprite.to_local(get_global_mouse_position())
+	var local_pos = get_global_mouse_position()#map_sprite.to_local(get_global_mouse_position())
 	var pid = MapManager.get_province_at_pos(local_pos, map_sprite)
 	
 	if pid <= 0: return
 	if right_path.size() > 0 and right_path[-1]["pid"] == pid: return
 	
-	var center_tex = MapManager.province_centers.get(pid, Vector2.ZERO)
-	if center_tex == Vector2.ZERO: return
+	# NOTE(pol): What if a province center is at (0, 0) ???
+	# var center_tex = MapManager.province_centers.get(pid, Vector2.ZERO)
+
+	var center_tex = MapManager.province_centers.get(pid)
+	if !center_tex: return
 	
-	var center_local = center_tex - (map_sprite.texture.get_size() * 0.5)
+	var center_local = center_tex# - (map_sprite.texture.get_size() * 0.5)
 	
 	right_path.append({
 		"pid": pid,
@@ -201,6 +204,7 @@ func _sample_province_under_mouse() -> void:
 
 func _perform_path_assignment() -> void:
 	if right_path.is_empty(): return
+
 	
 	# Extract unique sequential PIDs
 	var path_pids = []
@@ -208,7 +212,7 @@ func _perform_path_assignment() -> void:
 		if path_pids.is_empty() or path_pids[-1] != entry["pid"]:
 			path_pids.append(entry["pid"])
 
-	var selected_troops = SelectionManager.get_selected_troops()
+	var selected_troops := SelectionManager.selected_troops
 	if selected_troops.is_empty(): return
 	
 	# Setup target positions for math
@@ -284,12 +288,13 @@ func _perform_path_assignment() -> void:
 # ---------------------------
 func _draw() -> void:
 	if not map_sprite: return
-	var tex_offset = map_sprite.texture.get_size() * 0.5
+	#var tex_offset = map_sprite.texture.get_size() * 0.5
 	
 	# 1. Draw Selection Box
+	# NOTE(pol): Something like that should be done in screen space, no conversion
 	if dragging:
-		var local_start = map_sprite.to_local(drag_start)
-		var local_end = map_sprite.to_local(drag_end)
+		var local_start = drag_start #map_sprite.to_local(drag_start)
+		var local_end = drag_end #map_sprite.to_local(drag_end)
 		var r = Rect2(local_start, local_end - local_start).abs()
 		#draw_rect(r, Color(0, 0.5, 1, 0.2), true) (
 		draw_rect(r, Color(1.0, 1.0, 1.0, 1.0), false, 2.0)
@@ -297,20 +302,20 @@ func _draw() -> void:
 	# 2. Draw Right-Click Path Preview (with limit indicator)
 	if right_path.size() > 0:
 		for i in range(right_path.size()):
-			var p = right_path[i]["map_pos"]
+			var p = right_path[i]["map_pos"] + map_sprite.position
 			# Change color if we've reached the max path length
 			var color = Color(1, 0.2, 0.2) if i < max_path_length else Color(0.5, 0.5, 0.5)
 			draw_circle(p, 1, color)
 			if i < right_path.size() - 1:
-				draw_line(p, right_path[i+1]["map_pos"], color, 1.5)
+				draw_line(p, right_path[i+1]["map_pos"] + map_sprite.position, color, 1.5)
 
 	# 3. Draw Moving Troop Vectors (Arrows & Progress)
-	for t in TroopManager.troops:
-		if t.is_moving:
-			var start_local = t.position - tex_offset
-			var end_local = t.target_position - tex_offset
+	for troop in TroopManager.troops:
+		if troop.is_moving:
+			var start_local = troop.position + map_sprite.position #- tex_offset
+			var end_local = troop.target_position + map_sprite.position #- tex_offset
 			
-			var current_visual_pos = start_local.lerp(end_local, t.get_meta("visual_progress", 0.0))
+			var current_visual_pos = start_local.lerp(end_local, troop.get_meta("visual_progress", 0.0))
 			draw_line(start_local, current_visual_pos, Color(0, 1, 0, 0.8), 2.0)
 			#draw_line(start_local, current_visual_pos, Color(0, 1, 0, 0.8), 2.0)
 			draw_line(start_local, end_local, Color(1.0, 0.2, 0.2, 1), 1.0)

@@ -55,11 +55,12 @@ func _draw() -> void:
 		return
 
 	# This is the magic: map is centered → offset by half texture size
-	var offset = map_sprite.texture.get_size() * 0.5
+	#var offset = map_sprite.texture.get_size() * 0.5
 
 	for pid in province_centers:
+		# NOTE(pol): This is more like converting from world coord to viewport coord
 		var pixel_pos = Vector2(province_centers[pid].x, province_centers[pid].y)
-		var world_pos = pixel_pos - offset  # Convert from pixel coords → world coords
+		var world_pos = pixel_pos + map_sprite.position
 
 		# NOTE(pol): selected and hovered pid are always -1
 		#var col = dot_color
@@ -76,8 +77,8 @@ func _draw() -> void:
 		for i in range(path_to_highlight.size() - 1):
 			var pid1 = path_to_highlight[i]
 			var pid2 = path_to_highlight[i + 1]
-			var pos1 = Vector2(province_centers.get(pid1, Vector2.ZERO).x, province_centers.get(pid1, Vector2.ZERO).y) - offset
-			var pos2 = Vector2(province_centers.get(pid2, Vector2.ZERO).x, province_centers.get(pid2, Vector2.ZERO).y) - offset
+			var pos1 = Vector2(province_centers.get(pid1, Vector2.ZERO).x, province_centers.get(pid1, Vector2.ZERO).y) + map_sprite.offset # - offset
+			var pos2 = Vector2(province_centers.get(pid2, Vector2.ZERO).x, province_centers.get(pid2, Vector2.ZERO).y) + map_sprite.offset # offset
 			draw_line(pos1, pos2, Color.RED, 3.0)
 
 

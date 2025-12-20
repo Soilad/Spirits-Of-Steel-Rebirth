@@ -616,31 +616,6 @@ func is_path_possible(start_pid: int, end_pid: int) -> bool:
 	return not find_path(start_pid, end_pid).is_empty()
 
 
-func get_distance(start_pid: int, end_pid: int) -> int:
-	var path = find_path(start_pid, end_pid)
-	return get_path_length(path) if path.size() > 0 else -1
-
-
-# === FUTURE PORTS READY ===
-func find_path_with_ports(start_pid: int, end_pid: int, ports: Dictionary = {}) -> Array[int]:
-	"""FUTURE-PROOF: Same A* but allows sea travel between ports.
-	ports = {port_pid: [connected_sea_pids]}"""
-	# For now, just calls land-only pathfinder
-	return find_path(start_pid, end_pid)
-
-
-# --- CACHE MANAGEMENT ---
-func clear_path_cache() -> void:
-	"""Clear the path cache if needed (e.g., when map changes)"""
-	path_cache.clear()
-	print("Path cache cleared!")
-
-
-func get_cache_size() -> int:
-	"""Get number of cached paths"""
-	return path_cache.size()
-
-
 func print_cache_stats() -> void:
 	"""Print cache statistics"""
 	print("Path Cache Stats: %d paths cached" % path_cache.size())

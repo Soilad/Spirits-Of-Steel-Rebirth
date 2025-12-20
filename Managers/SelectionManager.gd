@@ -18,8 +18,5 @@ func clear_selection() -> void:
 	selected_troops.clear()
 	get_tree().call_group("TroopRenderer", "queue_redraw")
 
-func get_selected_troops():
-	return selected_troops
-	
 func is_a_troop_selected() -> bool:
 	return len(selected_troops) > 0
