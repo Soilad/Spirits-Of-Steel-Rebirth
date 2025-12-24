@@ -11,12 +11,12 @@ var map_width: float = 0.0
 
 
 func _ready() -> void:
-	#MapManager.map_ready.connect(_on_map_ready, CONNECT_ONE_SHOT)
-
 	await get_tree().process_frame # wait for Managers (singletons) to load
 	
 	if MapManager.id_map_image != null:
 		_on_map_ready()
+
+	TroopManager.troop_selection = $TroopSelection as TroopSelection
 
 
 func _on_map_ready() -> void:

@@ -235,7 +235,7 @@ func _draw_single_troop_visual(troop: TroopData, pos: Vector2, player_country: S
 ## Helper to determine border color AND thickness based on owner
 func _get_troop_style(troop: TroopData, player_country: String) -> Dictionary:
 	var is_owner = troop.country_name.to_lower() == player_country
-	var is_selected = SelectionManager.selected_troops.has(troop)
+	var is_selected := TroopManager.troop_selection.selected_troops.has(troop)
 	
 	if is_owner:
 		if is_selected:

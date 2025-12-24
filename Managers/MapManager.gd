@@ -315,11 +315,11 @@ func handle_click(global_pos: Vector2, map_sprite: Sprite2D) -> void:
 
 	var pid = get_province_with_radius(global_pos, map_sprite, 5)
 	if pid > 1:
-		if len(SelectionManager.selected_troops) > 0:
+		if !TroopManager.troop_selection.selected_troops.is_empty():
 			return
 		province_clicked.emit(pid, province_to_country.get(pid, ""))
-	else:
-		emit_signal("close_sidemenu")
+
+	close_sidemenu.emit()
 
 
 # To probe around and still register a click if we hit province/coutnry border

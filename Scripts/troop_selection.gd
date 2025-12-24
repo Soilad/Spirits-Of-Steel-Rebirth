@@ -1,8 +1,6 @@
 extends Node2D
+class_name TroopSelection
 
-# Added group to receive redraw calls from Manager
-func _enter_tree():
-	add_to_group("TroopRenderer")
 
 var font: Font = preload("res://font/TTT-Regular.otf")
 const TROOP_DATA_TYPE = preload("res://Scripts/TroopData.gd")
@@ -26,6 +24,19 @@ var right_path: Array = []
 
 # --- New State Variable to Cache Max Path Length ---
 var max_path_length: int = 0
+
+var selected_troops: Array[TROOP_DATA_TYPE] = []
+
+
+func select_troops(new_list: Array[TROOP_DATA_TYPE], append: bool = false) -> void:
+	if not append:
+		selected_troops.clear()
+	
+	for t in new_list:
+		if not selected_troops.has(t):
+			selected_troops.append(t)
+			
+	get_tree().call_group("TroopRenderer", "queue_redraw")
 
 
 func _input(event) -> void:
@@ -78,8 +89,7 @@ func _handle_left_mouse(event: InputEventMouseButton) -> void:
 		dragging = false
 		queue_redraw()
 	
-		# 🎯 PLAY SOUND HERE, ONLY ON MOUSE-UP AFTER DRAG
-		if drag_distance >= CLICK_THRESHOLD and SelectionManager.is_a_troop_selected():
+		if drag_distance >= CLICK_THRESHOLD and !selected_troops.is_empty():
 			MusicManager.play_sfx(MusicManager.SFX.TROOP_SELECTED)
 
 
@@ -116,8 +126,14 @@ func _perform_selection() -> void:
 
 	# LIVE UPDATE: Always apply current selection (even mid-drag)
 	var additive = Input.is_key_pressed(KEY_SHIFT)
+	if not additive:
+		selected_troops.clear()
+	
+	for t in selected_list:
+		if not selected_troops.has(t):
+			selected_troops.append(t)
 
-	SelectionManager.select_troops(selected_list, additive)
+	get_tree().call_group("TroopRenderer", "queue_redraw")
 
 	# Update max_path_length based on current live selection
 	max_path_length = 0
@@ -149,7 +165,7 @@ func _check_rect_intersection(selection_rect: Rect2, troop_rect: Rect2, tx: floa
 # Right-click Path Logic (With Split Support)
 # ---------------------------
 func _handle_right_mouse(event: InputEventMouseButton) -> void:
-	if event.pressed and SelectionManager.is_a_troop_selected():
+	if event.pressed and !selected_troops.is_empty():
 		right_dragging = true
 		drag_start = get_global_mouse_position()  # reuse drag_start for threshold
 		right_path.clear()
@@ -212,7 +228,6 @@ func _perform_path_assignment() -> void:
 		if path_pids.is_empty() or path_pids[-1] != entry["pid"]:
 			path_pids.append(entry["pid"])
 
-	var selected_troops := SelectionManager.selected_troops
 	if selected_troops.is_empty(): return
 	
 	# Setup target positions for math
@@ -239,6 +254,7 @@ func _perform_path_assignment() -> void:
 		return
 	
 	# Distribute divisions across provinces
+	@warning_ignore("integer_division")
 	var divisions_per_province = max(1, total_divisions / path_pids.size())
 	var remainder = total_divisions % path_pids.size()
 	

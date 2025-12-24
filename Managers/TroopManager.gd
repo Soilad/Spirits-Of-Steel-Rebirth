@@ -13,6 +13,8 @@ var path_cache: Dictionary = {}            # { start_id: { target_id: path_array
 var flag_cache: Dictionary = {}            # { country_name: texture }
 var needs_redraw := false                  # Used to throttle redraw calls
 
+var troop_selection: TroopSelection
+
 
 func _ready() -> void:
 	set_process(false)

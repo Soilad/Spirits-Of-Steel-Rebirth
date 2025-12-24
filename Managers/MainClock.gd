@@ -66,7 +66,6 @@ func set_speed(scale: float) -> void:
 	time_scale = clamp(scale, PAUSE, MAX_SPEED)
 
 
-
 func decreaseSpeed():
 	if is_paused():
 		set_speed(prev_time_scale)
@@ -77,20 +76,22 @@ func increaseSpeed():
 	if is_paused():
 		set_speed(prev_time_scale)
 	set_speed(time_scale + 15)
-	
 
 
 func is_paused() -> bool:
 	return time_scale <= PAUSE
+
 
 func pause() -> void:
 	if not is_paused():
 		prev_time_scale = time_scale
 		set_speed(PAUSE)
 
+
 func resume() -> void:
 	if is_paused():
 		set_speed(prev_time_scale)
+
 
 func toggle_pause() -> void:
 	if is_paused():

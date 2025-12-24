@@ -1,20 +1,23 @@
+@tool
 extends Control
 class_name DecisionTree
 
 @export var json_path: String = "res://decisions.json"
 var button_theme: Theme = preload("res://button_theme.tres")
 
-
 @onready var tree_content = $ScrollContainer/TreeContent
 
 var json_data : Dictionary
 
+
 func _ready():
 	hide()
+
 
 func open_tree():
 	show()
 	load_and_build_tree()
+
 
 func load_and_build_tree():
 	_clear_tree()
@@ -30,23 +33,27 @@ func load_and_build_tree():
 		for node_data in nodes:
 			_create_decision_button(node_data)
 
+
 func _clear_tree():
 	for child in tree_content.get_children():
 		child.queue_free()
+
 
 func _load_json(path: String) -> Dictionary:
 	var text = FileAccess.get_file_as_string(path)
 	return JSON.parse_string(text)
 
-func _create_category_label(name: String, nodes: Array):
+
+func _create_category_label(category_name: String, nodes: Array):
 	if nodes.is_empty():
 		return
 
 	var label := Label.new()
-	label.text = name.to_upper()
+	label.text = category_name.to_upper()
 	label.position = Vector2(nodes[0]["pos"][0], nodes[0]["pos"][1] - 40)
 	label.add_theme_font_size_override("font_size", 18)
 	tree_content.add_child(label)
+
 
 func _create_decision_button(node_data: Dictionary):
 	var btn := Button.new()
@@ -68,6 +75,7 @@ func _create_decision_button(node_data: Dictionary):
 	else:
 		btn.pressed.connect(_on_node_clicked.bind(btn))
 
+
 func _on_node_clicked(btn: Button):
 	var node_data : Dictionary = btn.get_meta("node_data")
 
@@ -80,6 +88,7 @@ func _on_node_clicked(btn: Button):
 	node_data["clicked"] = true
 	_lock_button(btn)
 
+
 func _lock_button(btn: Button):
 	btn.disabled = true
 
@@ -89,6 +98,7 @@ func _lock_button(btn: Button):
 		"disabled",
 		btn.get_theme_stylebox("hover")
 	)
+
 
 func _execute_action(action: Dictionary):
 	match action.get("type", ""):
@@ -111,4 +121,3 @@ func _on_exit_button_button_up() -> void:
 	hide()
 	GameState.decision_tree_open = false
 	MainClock.resume()
-	pass # Replace with function body.
