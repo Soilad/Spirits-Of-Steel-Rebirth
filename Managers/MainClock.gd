@@ -13,7 +13,6 @@ signal day_passed
 @export var start_hour := 0
 
 var time_scale := 0.0
-var prev_time_scale := 0.0 # used for pausing and resuming
 var MAX_SPEED := 75.0
 var PAUSE := 0.0
 
@@ -67,34 +66,23 @@ func set_speed(scale: float) -> void:
 
 
 func decreaseSpeed():
-	if is_paused():
-		set_speed(prev_time_scale)
 	set_speed(time_scale - 15)
 
 
 func increaseSpeed():
-	if is_paused():
-		set_speed(prev_time_scale)
 	set_speed(time_scale + 15)
 
 
-func is_paused() -> bool:
-	return time_scale <= PAUSE
-
-
 func pause() -> void:
-	if not is_paused():
-		prev_time_scale = time_scale
-		set_speed(PAUSE)
+	set_process(false)
 
 
 func resume() -> void:
-	if is_paused():
-		set_speed(prev_time_scale)
+	set_process(true)
 
 
 func toggle_pause() -> void:
-	if is_paused():
-		resume()
-	else:
+	if is_processing():
 		pause()
+	else:
+		resume()
