@@ -73,16 +73,8 @@ func increaseSpeed():
 	set_speed(time_scale + 15)
 
 
-func pause() -> void:
-	set_process(false)
-
-
-func resume() -> void:
-	set_process(true)
-
-
 func toggle_pause() -> void:
 	if is_processing():
-		pause()
+		set_process(false)
 	else:
-		resume()
+		set_process(true)

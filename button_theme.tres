@@ -2,12 +2,12 @@
 
 [ext_resource type="FontFile" uid="uid://cee8mbnpx3w3h" path="res://font/arial.TTF" id="1_y3u7b"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_umafu"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_y3u7b"]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.3)
+bg_color = Color(0.19607843, 0.19607843, 0.19607843, 1)
 corner_detail = 5
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_umafu"]
@@ -17,7 +17,7 @@ content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-bg_color = Color(0.19434926, 0.19434929, 0.19434917, 1)
+bg_color = Color(0.2665752, 0.26657522, 0.26657507, 1)
 corner_detail = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h7yuw"]
@@ -40,7 +40,7 @@ corner_detail = 5
 default_font = ExtResource("1_y3u7b")
 default_font_size = 20
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
-Button/colors/font_disabled_color = Color(0.875, 0.875, 0.875, 0.5)
+Button/colors/font_disabled_color = Color(1, 1, 1, 1)
 Button/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
 Button/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
 Button/colors/font_hover_pressed_color = Color(1, 1, 1, 1)
@@ -56,7 +56,7 @@ Button/constants/align_to_largest_stylebox = 0
 Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
-Button/styles/disabled = SubResource("StyleBoxFlat_umafu")
+Button/styles/disabled = SubResource("StyleBoxFlat_y3u7b")
 Button/styles/focus = SubResource("StyleBoxEmpty_umafu")
 Button/styles/hover = SubResource("StyleBoxFlat_hr0ed")
 Button/styles/normal = SubResource("StyleBoxFlat_h7yuw")

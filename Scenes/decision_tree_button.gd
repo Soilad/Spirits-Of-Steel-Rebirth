@@ -4,6 +4,6 @@ extends Button
 
 
 func _on_button_up() -> void:
-	decision_tree.open_tree()
-	MainClock.pause()
+	decision_tree.show()
+	MainClock.set_process(false)
 	GameState.decision_tree_open = true

@@ -1,28 +1,19 @@
-@tool
 extends Control
 class_name DecisionTree
 
 @export var json_path: String = "res://decisions.json"
-var button_theme: Theme = preload("res://button_theme.tres")
+@export var button_theme: Theme
 
-@onready var tree_content = $ScrollContainer/TreeContent
-
-var json_data : Dictionary
+@onready var tree_content := $ScrollContainer/TreeContent as Control
 
 
 func _ready():
 	hide()
-
-
-func open_tree():
-	show()
 	load_and_build_tree()
 
 
 func load_and_build_tree():
-	_clear_tree()
-
-	json_data = _load_json(json_path)
+	var json_data = JSON.parse_string(FileAccess.get_file_as_string(json_path))
 	if json_data == null:
 		return
 
@@ -32,16 +23,6 @@ func load_and_build_tree():
 
 		for node_data in nodes:
 			_create_decision_button(node_data)
-
-
-func _clear_tree():
-	for child in tree_content.get_children():
-		child.queue_free()
-
-
-func _load_json(path: String) -> Dictionary:
-	var text = FileAccess.get_file_as_string(path)
-	return JSON.parse_string(text)
 
 
 func _create_category_label(category_name: String, nodes: Array):
@@ -66,18 +47,17 @@ func _create_decision_button(node_data: Dictionary):
 
 	tree_content.add_child(btn)
 	
-	
 	btn.set_meta("node_data", node_data)
 
 	# if already clicked
 	if node_data.get("clicked", false):
-		_lock_button(btn)
+		btn.disabled = true
 	else:
-		btn.pressed.connect(_on_node_clicked.bind(btn))
+		btn.pressed.connect(_on_button_pressed.bind(btn))
 
 
-func _on_node_clicked(btn: Button):
-	var node_data : Dictionary = btn.get_meta("node_data")
+func _on_button_pressed(btn: Button):
+	var node_data: Dictionary = btn.get_meta("node_data")
 
 	if node_data.get("clicked", false):
 		return
@@ -86,18 +66,7 @@ func _on_node_clicked(btn: Button):
 		_execute_action(node_data["action"])
 
 	node_data["clicked"] = true
-	_lock_button(btn)
-
-
-func _lock_button(btn: Button):
 	btn.disabled = true
-
-	# Force hovered look permanently
-	btn.add_theme_color_override("font_color", Color.WHITE)
-	btn.add_theme_stylebox_override(
-		"disabled",
-		btn.get_theme_stylebox("hover")
-	)
 
 
 func _execute_action(action: Dictionary):
@@ -120,4 +89,4 @@ func _execute_action(action: Dictionary):
 func _on_exit_button_button_up() -> void:
 	hide()
 	GameState.decision_tree_open = false
-	MainClock.resume()
+	MainClock.set_process(true)
