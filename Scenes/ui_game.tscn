@@ -1,7 +1,7 @@
-[gd_scene load_steps=22 format=3 uid="uid://dgfixe44dvfny"]
+[gd_scene load_steps=25 format=3 uid="uid://dgfixe44dvfny"]
 
 [ext_resource type="Script" uid="uid://dqvjehbri1br0" path="res://Scenes/ui_game.gd" id="1_rp7y5"]
-[ext_resource type="Texture2D" uid="uid://bd1tehujs0p3u" path="res://assets/flags/abkhazia_flag.png" id="1_xar7q"]
+[ext_resource type="Texture2D" uid="uid://dpohmal5pe58k" path="res://assets/flags/abkhazia_flag.png" id="1_xar7q"]
 [ext_resource type="Texture2D" uid="uid://c4l0ecosgnbm2" path="res://assets/ui/inverted_corner_black.png" id="2_vxity"]
 [ext_resource type="Texture2D" uid="uid://blu52vb3afbc1" path="res://assets/icons/political_power_icon.png" id="2_xsn6u"]
 [ext_resource type="Texture2D" uid="uid://vmj131bo8hna" path="res://assets/icons/man_power_icon.png" id="3_liin1"]
@@ -17,6 +17,25 @@
 [ext_resource type="Script" uid="uid://dksnbn8a7o5je" path="res://Scenes/decision_tree_button.gd" id="13_uqxsi"]
 [ext_resource type="Texture2D" uid="uid://blvp32r1imoh" path="res://assets/ui/inverted_corner.png" id="14_yp111"]
 [ext_resource type="FontFile" uid="uid://cfsmiwr5bc70" path="res://font/Google_Sans/static/GoogleSans-Medium.ttf" id="15_yp111"]
+[ext_resource type="Shader" uid="uid://dbd4uk0ygjq5m" path="res://shaders/BorderRadius.gdshader" id="16_6c76w"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6c76w"]
+shader = ExtResource("16_6c76w")
+shader_parameter/tex_size = Vector2(512, 512)
+shader_parameter/rect_size = Vector2(180, 90)
+shader_parameter/stretch_mode = 0
+shader_parameter/expand = true
+shader_parameter/top = 0.0
+shader_parameter/right = 30.0
+shader_parameter/bottom = 30.0
+shader_parameter/left = 0.0
+shader_parameter/use_resize = true
+shader_parameter/new_size = Vector2(180, 90)
+shader_parameter/align = 4
+shader_parameter/use_fill = false
+shader_parameter/bg_color = Vector4(0, 0, 0, 1)
+shader_parameter/fg_color = Vector4(1, 1, 1, 0)
+shader_parameter/fg_alpha = 0.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqxsi"]
 bg_color = Color(0, 0, 0, 1)
@@ -38,6 +57,24 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5phox"]
+shader = ExtResource("16_6c76w")
+shader_parameter/tex_size = Vector2(512, 512)
+shader_parameter/rect_size = Vector2(180, 90)
+shader_parameter/stretch_mode = 0
+shader_parameter/expand = true
+shader_parameter/top = 15.0
+shader_parameter/right = 15.0
+shader_parameter/bottom = 15.0
+shader_parameter/left = 15.0
+shader_parameter/use_resize = true
+shader_parameter/new_size = Vector2(180, 90)
+shader_parameter/align = 4
+shader_parameter/use_fill = false
+shader_parameter/bg_color = Vector4(0, 0, 0, 1)
+shader_parameter/fg_color = Vector4(1, 1, 1, 0)
+shader_parameter/fg_alpha = 0.5
+
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_rp7y5")
 
@@ -57,15 +94,16 @@ layout_mode = 1
 anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
-offset_top = -14.0
+offset_top = -17.5
 offset_right = 545.0
-offset_bottom = 14.0
+offset_bottom = 17.5
 grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Topbar/MarginContainer"]
 layout_mode = 2
 
 [node name="nation_flag" type="TextureRect" parent="Topbar/MarginContainer/HBoxContainer"]
+material = SubResource("ShaderMaterial_6c76w")
 layout_mode = 2
 texture = ExtResource("1_xar7q")
 expand_mode = 3
@@ -236,48 +274,55 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -91.0
-offset_top = -109.0
-offset_right = 91.0
-offset_bottom = -51.0
+offset_left = -134.0
+offset_top = -114.5
+offset_right = 198.91925
+offset_bottom = -56.5
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(0.805, 0.805)
+theme_override_constants/separation = 24
+alignment = 1
 
 [node name="DiplomacyMenuButton" type="Button" parent="Sidemenu/SideMenuButtons"]
 layout_mode = 2
+theme = ExtResource("13_sdmnd")
 icon = ExtResource("2_xsn6u")
 
 [node name="EconomyMenuButton" type="Button" parent="Sidemenu/SideMenuButtons"]
 layout_mode = 2
+theme = ExtResource("13_sdmnd")
 icon = ExtResource("4_dw8mh")
 
 [node name="MilitaryMenuButton" type="Button" parent="Sidemenu/SideMenuButtons"]
 layout_mode = 2
+theme = ExtResource("13_sdmnd")
 icon = ExtResource("3_liin1")
 
 [node name="Panel" type="Panel" parent="Sidemenu"]
 layout_mode = 0
-offset_left = 1.0
-offset_top = 269.0
-offset_right = 242.0
-offset_bottom = 319.0
+offset_top = 253.0
+offset_right = 251.0
+offset_bottom = 303.0
 theme = ExtResource("13_sdmnd")
 theme_override_styles/panel = SubResource("StyleBoxFlat_6c76w")
 
 [node name="TextureRect" type="TextureRect" parent="Sidemenu/Panel"]
 layout_mode = 0
-offset_left = 184.0
-offset_right = 234.00003
+offset_left = 191.0
+offset_right = 241.00003
 offset_bottom = 50.0
 texture = ExtResource("2_xsn6u")
 
 [node name="label_category" type="Label" parent="Sidemenu/Panel"]
 layout_mode = 0
-offset_top = 13.0
-offset_right = 192.0
-offset_bottom = 39.0
+offset_left = 14.0
+offset_top = 1.0
+offset_right = 199.0
+offset_bottom = 50.0
 theme = ExtResource("13_sdmnd")
 theme_override_fonts/font = ExtResource("4_uqxsi")
+theme_override_font_sizes/font_size = 22
 text = "Diplomacy Actions"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -290,7 +335,7 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -127.5
-offset_top = 17.0
+offset_top = 5.5
 offset_right = 127.5
 offset_bottom = 301.0
 grow_horizontal = 2
@@ -324,6 +369,7 @@ offset_bottom = 135.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_sdmnd")
 
 [node name="TextureRect" type="TextureRect" parent="Sidemenu/Flag"]
+material = SubResource("ShaderMaterial_5phox")
 custom_minimum_size = Vector2(180, 90)
 layout_mode = 2
 texture = ExtResource("1_xar7q")

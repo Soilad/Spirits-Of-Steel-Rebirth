@@ -11,6 +11,8 @@ extends Node
 @export var max_zoom: float = 10.0
 
 var is_dragging := false
+var is_paused := false
+
 
 func _process(delta: float) -> void:
 	if GameState.decision_tree_open: return
@@ -18,6 +20,10 @@ func _process(delta: float) -> void:
 
 func _input(event: InputEvent) -> void:
 	if GameState.decision_tree_open: return
+	
+	if event.is_action_pressed("pause_game"):
+		is_paused = not is_paused
+		MainClock.set_process(is_paused)
 
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_MIDDLE:
 		is_dragging = event.pressed
