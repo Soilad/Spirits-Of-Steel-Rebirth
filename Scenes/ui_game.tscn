@@ -50,6 +50,8 @@ shadow_color = Color(0, 0, 0, 0.18039216)
 bg_color = Color(0.20990813, 0.20990813, 0.20990801, 1)
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
+shadow_color = Color(0, 0, 0, 0.39607844)
+shadow_size = 15
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdmnd"]
 corner_radius_top_left = 15
@@ -85,7 +87,7 @@ size_flags_horizontal = 0
 color = Color(0.09803922, 0.09803922, 0.09803922, 1)
 
 [node name="right" type="Sprite2D" parent="Topbar"]
-position = Vector2(1123, 64)
+position = Vector2(1122, 65)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_vxity")
 
@@ -343,6 +345,7 @@ grow_vertical = 2
 
 [node name="ActionsList" type="VBoxContainer" parent="Sidemenu/ScrollContainer"]
 layout_mode = 2
+alignment = 1
 
 [node name="Label" type="Label" parent="Sidemenu"]
 layout_mode = 1
