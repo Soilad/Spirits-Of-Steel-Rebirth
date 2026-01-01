@@ -30,8 +30,8 @@ const LAYOUT = {
 }
 
 const ZOOM_LIMITS = {
-	"min_scale":  0.12, 
-	"max_scale":  4.0 
+	"min_scale":  0.1, 
+	"max_scale":  2.0 
 }
 
 const STACKING_OFFSET_Y := 20.0

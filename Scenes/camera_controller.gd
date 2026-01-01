@@ -7,8 +7,8 @@ extends Node
 
 @export_group("Zoom Settings")
 @export var zoom_step: float = 0.9  # Linear step
-@export var min_zoom: float = 0.5
-@export var max_zoom: float = 10.0
+@export var min_zoom: float = 0.3
+@export var max_zoom: float = 9.0
 
 var is_dragging := false
 var is_paused := false
