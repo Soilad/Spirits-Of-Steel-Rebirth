@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dgfixe44dvfny"]
+[gd_scene load_steps=26 format=3 uid="uid://dgfixe44dvfny"]
 
 [ext_resource type="Script" uid="uid://dqvjehbri1br0" path="res://Scenes/ui_game.gd" id="1_rp7y5"]
 [ext_resource type="Texture2D" uid="uid://dpohmal5pe58k" path="res://assets/flags/abkhazia_flag.png" id="1_xar7q"]
@@ -18,25 +18,6 @@
 [ext_resource type="Script" uid="uid://dksnbn8a7o5je" path="res://Scenes/decision_tree_button.gd" id="13_uqxsi"]
 [ext_resource type="Texture2D" uid="uid://blvp32r1imoh" path="res://assets/ui/inverted_corner.png" id="14_yp111"]
 [ext_resource type="FontFile" uid="uid://cfsmiwr5bc70" path="res://font/Google_Sans/static/GoogleSans-Medium.ttf" id="15_yp111"]
-[ext_resource type="Shader" uid="uid://dbd4uk0ygjq5m" path="res://shaders/BorderRadius.gdshader" id="16_6c76w"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_6c76w"]
-shader = ExtResource("16_6c76w")
-shader_parameter/tex_size = Vector2(512, 512)
-shader_parameter/rect_size = Vector2(180, 90)
-shader_parameter/stretch_mode = 0
-shader_parameter/expand = true
-shader_parameter/top = 0.0
-shader_parameter/right = 30.0
-shader_parameter/bottom = 30.0
-shader_parameter/left = 0.0
-shader_parameter/use_resize = true
-shader_parameter/new_size = Vector2(180, 90)
-shader_parameter/align = 4
-shader_parameter/use_fill = false
-shader_parameter/bg_color = Vector4(0, 0, 0, 1)
-shader_parameter/fg_color = Vector4(1, 1, 1, 0)
-shader_parameter/fg_alpha = 0.5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uqxsi"]
 bg_color = Color(0, 0, 0, 1)
@@ -60,12 +41,10 @@ corner_radius_bottom_left = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85er5"]
 bg_color = Color(0.0627451, 0.0627451, 0.0627451, 1)
-corner_radius_bottom_right = 30
 anti_aliasing = false
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ilaaa"]
 bg_color = Color(0.09803922, 0.09803922, 0.09803922, 1)
-corner_radius_bottom_right = 30
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdmnd"]
 corner_radius_top_left = 15
@@ -73,30 +52,8 @@ corner_radius_top_right = 15
 corner_radius_bottom_right = 15
 corner_radius_bottom_left = 15
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5phox"]
-shader = ExtResource("16_6c76w")
-shader_parameter/tex_size = Vector2(512, 512)
-shader_parameter/rect_size = Vector2(180, 90)
-shader_parameter/stretch_mode = 0
-shader_parameter/expand = true
-shader_parameter/top = 15.0
-shader_parameter/right = 15.0
-shader_parameter/bottom = 15.0
-shader_parameter/left = 15.0
-shader_parameter/use_resize = true
-shader_parameter/new_size = Vector2(180, 90)
-shader_parameter/align = 4
-shader_parameter/use_fill = false
-shader_parameter/bg_color = Vector4(0, 0, 0, 1)
-shader_parameter/fg_color = Vector4(1, 1, 1, 0)
-shader_parameter/fg_alpha = 0.5
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6c76w"]
 bg_color = Color(0.20990813, 0.20990813, 0.20990801, 1)
-corner_radius_top_right = 30
-corner_radius_bottom_right = 30
-shadow_color = Color(0, 0, 0, 0.35686275)
-shadow_size = 10
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_rp7y5")
@@ -113,7 +70,6 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_vxity")
 
 [node name="nation_flag" type="TextureRect" parent="Topbar"]
-material = SubResource("ShaderMaterial_6c76w")
 layout_mode = 0
 offset_right = 56.711998
 offset_bottom = 34.0
@@ -286,32 +242,36 @@ offset_bottom = 35.0
 tooltip_text = "World tension meter"
 
 [node name="SpeedPanel" type="PanelContainer" parent="."]
-offset_left = 1104.0
-offset_top = 53.0
-offset_right = 1164.0
-offset_bottom = 175.0
+offset_left = 1074.0
+offset_top = 48.0
+offset_right = 1196.0
+offset_bottom = 108.0
 scale = Vector2(0.5, 0.5)
 theme_override_styles/panel = SubResource("StyleBoxFlat_5phox")
 
-[node name="GameSpeedControl" type="VBoxContainer" parent="SpeedPanel"]
+[node name="HBoxContainer" type="HBoxContainer" parent="SpeedPanel"]
 layout_mode = 2
+theme_override_constants/separation = 4
 
-[node name="Plus" type="Button" parent="SpeedPanel/GameSpeedControl"]
+[node name="Plus" type="Button" parent="SpeedPanel/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Increase game speed"
 action_mode = 0
 icon = ExtResource("10_lnl2f")
 flat = true
 
-[node name="Minus" type="Button" parent="SpeedPanel/GameSpeedControl"]
+[node name="Minus" type="Button" parent="SpeedPanel/HBoxContainer"]
 layout_mode = 2
 tooltip_text = "Decrease game speed"
 icon = ExtResource("11_6bnrr")
 flat = true
 
+[node name="GameSpeedControl" type="VBoxContainer" parent="SpeedPanel"]
+layout_mode = 2
+
 [node name="SidemenuBG" type="PanelContainer" parent="."]
 offset_top = 35.0
-offset_right = 246.0
+offset_right = 268.0
 offset_bottom = 648.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_85er5")
 
@@ -354,7 +314,6 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_sdmnd")
 
 [node name="TextureRect" type="TextureRect" parent="SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/Flag"]
-material = SubResource("ShaderMaterial_5phox")
 custom_minimum_size = Vector2(180, 90)
 layout_mode = 2
 texture = ExtResource("1_xar7q")
@@ -393,7 +352,6 @@ layout_mode = 0
 offset_top = 253.0
 offset_right = 268.0
 offset_bottom = 303.0
-theme = ExtResource("13_sdmnd")
 theme_override_styles/panel = SubResource("StyleBoxFlat_6c76w")
 
 [node name="TextureRect" type="TextureRect" parent="SidemenuBG/Sidemenu/Panel"]
@@ -447,8 +405,8 @@ decision_tree = NodePath("../DecisionTree")
 visible = false
 z_index = 1
 
-[connection signal="mouse_entered" from="SpeedPanel/GameSpeedControl/Plus" to="." method="_on_button_mouse_entered"]
-[connection signal="mouse_entered" from="SpeedPanel/GameSpeedControl/Minus" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_entered" from="SpeedPanel/HBoxContainer/Plus" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_entered" from="SpeedPanel/HBoxContainer/Minus" to="." method="_on_button_mouse_entered"]
 [connection signal="button_up" from="SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/DiplomacyMenuButton" to="." method="_on_menu_button_button_up" binds= [0]]
 [connection signal="button_up" from="SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/EconomyMenuButton" to="." method="_on_menu_button_button_up" binds= [1]]
 [connection signal="button_up" from="SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/MilitaryMenuButton" to="." method="_on_menu_button_button_up" binds= [2]]
