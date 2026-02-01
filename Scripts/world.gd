@@ -34,13 +34,16 @@ func _ready() -> void:
 	clock.hour_passed.connect(CountryManager._on_hour_passed)
 	clock.day_passed.connect(CountryManager._on_day_passed)
 
-	MapManager.load_country_data()
+	# MapManager.load_country_data()
 
 	print("World: Map is ready -> configuring visuals...")
 
 	MapManager.all_cities = MapManager.get_all_cities()
+
+	# NOTE(soi): this seems important
 	CountryManager.initialize_countries()
-	CountryManager.set_player_country("brazil")
+	if !CountryManager.player_country:
+		CountryManager.set_player_country("brazil")
 	# For debugging purposes. Create some troops first
 	MapManager.force_bidirectional_connections()
 	MapManager._build_global_registry()
