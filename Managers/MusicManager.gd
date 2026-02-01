@@ -22,8 +22,7 @@ enum SFX {
 
 enum MUSIC { MAIN_THEME, BATTLE_THEME }
 
-const gameMusic = "res://assets/music/gameMusic"
-const warMusic = "res://assets/music/warMusic"
+const music_path = "res://assets/music/"
 
 var sfx_map = {
 	SFX.TROOP_MOVE: preload("res://assets/snd/moveDivSound.mp3"),
@@ -50,14 +49,19 @@ var sfx_volume_map = {
 	SFX.POPUP: 0.5,
 }
 
-var music_map = {MUSIC.MAIN_THEME: [], MUSIC.BATTLE_THEME: []}
+var music_map = {MUSIC.MAIN_THEME: {}, MUSIC.BATTLE_THEME: {}}
+
+var radios = ["default"]
 
 var music_volume_map = {MUSIC.MAIN_THEME: 0.4, MUSIC.BATTLE_THEME: 0.5}
 
 
 func _ready():
-	_load_music_folder(gameMusic, MUSIC.MAIN_THEME)
-	_load_music_folder(warMusic, MUSIC.BATTLE_THEME)
+	for radio in radios:
+		music_map[MUSIC.MAIN_THEME][radio] = []
+		music_map[MUSIC.BATTLE_THEME][radio] = []
+		_load_music_folder(radio, MUSIC.MAIN_THEME)
+		_load_music_folder(radio, MUSIC.BATTLE_THEME)
 
 	music_player = AudioStreamPlayer.new()
 	music_player.bus = "Music"
@@ -72,8 +76,21 @@ func _ready():
 
 	play_music(MUSIC.MAIN_THEME)
 
+func _update_radio():
+	music_map = {MUSIC.MAIN_THEME: {}, MUSIC.BATTLE_THEME: {}}
+	for radio in radios:
+		music_map[MUSIC.MAIN_THEME][radio] = []
+		music_map[MUSIC.BATTLE_THEME][radio] = []
+		_load_music_folder(radio, MUSIC.MAIN_THEME)
+		_load_music_folder(radio, MUSIC.BATTLE_THEME)
 
-func _load_music_folder(path: String, track_enum: int):
+func _load_music_folder(radio: String, track_enum: int):
+	var path = music_path + radio
+	match track_enum:
+		MUSIC.MAIN_THEME:
+			path += "/gameMusic"
+		MUSIC.BATTLE_THEME:
+			path += "/warMusic"
 	var dir = DirAccess.open(path)
 	if dir:
 		dir.list_dir_begin()
@@ -83,7 +100,7 @@ func _load_music_folder(path: String, track_enum: int):
 				var full_path = path + "/" + file_name
 				var stream = load(full_path)
 				if stream:
-					music_map[track_enum].append(stream)
+					music_map[track_enum][radio].append(stream)
 			file_name = dir.get_next()
 
 
@@ -96,7 +113,13 @@ func play_music(track: int):
 
 	current_track_type = track
 
-	music_player.stream = music_map[track].pick_random()
+	var songs = []
+	for radio in music_map[track].values():
+		songs.append_array(radio)
+
+	var song = songs.pick_random()
+	print(song)
+	music_player.stream = song
 	music_player.volume_db = linear_to_db(music_volume_map.get(track, 1.0))
 	music_player.play()
 

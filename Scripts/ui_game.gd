@@ -38,6 +38,7 @@ var actions_container: VBoxContainer = $Control/SidemenuBG/Sidemenu/ScrollContai
 # ── Speed Controls ────────────────────────────────────
 @onready var plus: Button = $Control/SpeedPanel/GameSpeedControl/PlusPanel/Plus
 @onready var minus: Button = $Control/SpeedPanel/GameSpeedControl/MinusPanel/Minus
+@onready var radio_list: VBoxContainer = $Radios
 
 # ── State Variables ───────────────────────────────────
 var selected_country: CountryData = null
@@ -130,6 +131,27 @@ func _ready() -> void:
 	plus.pressed.connect(clock.increase_speed)
 	minus.pressed.connect(clock.decrease_speed)
 	label_date.text = clock.get_datetime_string()
+
+	# NOTE(soi): its soiladin time
+	const music_path = "res://assets/music/"
+	for radio in DirAccess.open(music_path).get_directories():
+		var entry = Button.new()
+		entry.text = radio
+		entry.icon = load(music_path + radio + "/thumbnail.png")
+		entry.expand_icon = true
+		entry.pressed.connect(
+		func(): 
+			if radio in MusicManager.radios:
+				MusicManager.radios.erase(radio)
+			else:
+				MusicManager.radios.append(radio)
+			MusicManager._update_radio()
+			print(MusicManager.radios)
+			print(MusicManager.music_map)
+		)
+		radio_list.add_child(entry)
+	print()
+
 
 
 func _on_player_change() -> void:
@@ -686,3 +708,6 @@ func _on_button_division_change(add: int) -> void:
 
 func _on_input_division_text_changed(new_text: String) -> void:
 	update_division_menu()
+
+func _on_music_pressed():
+	radio_list.visible = !radio_list.visible
