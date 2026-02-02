@@ -235,6 +235,7 @@ text = "exit
 "
 
 [node name="CountrySelect" type="Control" parent="." unique_id=1383980299]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0

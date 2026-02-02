@@ -134,9 +134,9 @@ func _ready() -> void:
 
 	# NOTE(soi): its soiladin time
 	const music_path = "res://assets/music/"
-	for radio in DirAccess.open(music_path).get_directories():
+	for radio in MusicManager.music_map[0]:
 		var entry = Button.new()
-		entry.text = radio
+		entry.text = "\n\n\n" + radio
 		entry.icon = load(music_path + radio + "/thumbnail.png")
 		entry.expand_icon = true
 		entry.pressed.connect(

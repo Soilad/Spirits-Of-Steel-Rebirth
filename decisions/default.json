@@ -42,10 +42,19 @@
 	  }
 	],
 	"Military": [
+	{
+		"id": "mil_0",
+		"title": "WORLD WAR 3",
+		"pos": [100, 300],
+		"days": 10,
+		"cost_pp": 20,
+		"action": { "type": "declare_war", "amount": ["china", "india"] },
+		"desc": "Encourage enlistment."
+	  },
 	  {
 		"id": "mil_1",
 		"title": "Military Youth",
-		"pos": [100, 300],
+		"pos": [200, 300],
 		"days": 10,
 		"cost_pp": 20,
 		"action": { "type": "increase_manpower", "amount": 1000 },

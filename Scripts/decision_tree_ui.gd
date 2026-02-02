@@ -133,7 +133,10 @@ func _toggle_pause(pause: bool):
 func _rebuild_tabs():
 	for c in tabs_container.get_children():
 		c.queue_free()
-	for cat in DecisionManager.categories.keys():
+	
+	var all_decisions = DecisionManager.get_country_categories(CountryManager.player_country.country_name)
+	
+	for cat in all_decisions.keys():
 		var btn = Button.new()
 		btn.text = " " + cat.to_upper() + " "
 		btn.toggle_mode = true
@@ -154,8 +157,9 @@ func _load_category(cat_name: String):
 	connection_lines.clear()
 	tree_canvas.position = Vector2.ZERO
 
-	var nodes = DecisionManager.categories[cat_name]
 	var player = CountryManager.player_country
+	var all_decisions = DecisionManager.get_country_categories(player.country_name)
+	var nodes = all_decisions.get(cat_name, [])
 
 	for i in range(nodes.size()):
 		_create_node(nodes[i], i, player)
@@ -290,7 +294,8 @@ func refresh_status_only():
 	if not visible:
 		return
 	var player = CountryManager.player_country
-	var nodes = DecisionManager.categories[current_category]
+	var all_decisions = DecisionManager.get_country_categories(player.country_name)
+	var nodes = all_decisions.get(current_category, [])
 	for btn in node_buttons.values():
 		_apply_node_style(btn, nodes[btn.get_meta("idx")], player)
 	tree_canvas.queue_redraw()

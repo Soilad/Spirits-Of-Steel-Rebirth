@@ -1,0 +1,106 @@
+{
+  "categories": {
+	"Economy": [
+	  {
+		"id": "eco_1",
+		"title": "Industrial Effort",
+		"pos": [100, 300],
+		"days": 3,
+		"cost_pp": 25,
+		"action": { "type": "increase_hourly_money", "amount": 5000 },
+		"desc": "Focus the state on basic monetary gain."
+	  },
+	  {
+		"id": "eco_2",
+		"title": "Factory Subsidies",
+		"prereq": "eco_1",
+		"pos": [400, 200],
+		"days": 20,
+		"cost_pp": 50,
+		"action": { "type": "build_factory", "amount": 1 },
+		"desc": "Direct investment into new factories."
+	  },
+	  {
+		"id": "eco_3",
+		"title": "Tax Reform",
+		"prereq": "eco_1",
+		"pos": [400, 400],
+		"days": 15,
+		"cost_pp": 40,
+		"action": { "type": "increase_hourly_money", "amount": 500 },
+		"desc": "Optimizing tax collection."
+	  },
+	  {
+		"id": "eco_4",
+		"title": "Centralized Economy",
+		"prereq": "eco_2",
+		"pos": [700, 200],
+		"days": 30,
+		"cost_pp": 100,
+		"action": { "type": "increase_hourly_money", "amount": 1000 },
+		"desc": "Complete state control of production."
+	  }
+	],
+	"Military": [
+	{
+		"id": "mil_0",
+		"title": "WORLD WAR 3 (indian)",
+		"pos": [100, 300],
+		"days": 10,
+		"cost_pp": 20,
+		"action": { "type": "declare_war", "amount": ["china", "russia"] },
+		"desc": "Encourage enlistment."
+	  },
+	  {
+		"id": "mil_1",
+		"title": "Military Youth",
+		"pos": [400, 300],
+		"days": 10,
+		"cost_pp": 20,
+		"action": { "type": "increase_manpower", "amount": 1000 },
+		"desc": "Encourage enlistment."
+	  },
+	  {
+		"id": "mil_2",
+		"title": "Officer Schools",
+		"prereq": "mil_1",
+		"pos": [400, 200],
+		"days": 25,
+		"cost_pp": 60,
+		"action": { "type": "army_level_up", "amount": 1 },
+		"desc": "Better leadership improves army stats."
+	  },
+	  {
+		"id": "mil_3",
+		"title": "Conscription Law",
+		"prereq": "mil_1",
+		"pos": [400, 400],
+		"days": 15,
+		"cost_pp": 30,
+		"action": { "type": "increase_manpower", "amount": 5000 },
+		"desc": "Mandatory service for all eligible adults."
+	  }
+	],
+	"Political": [
+	  {
+		"id": "pol_1",
+		"title": "State Propaganda",
+		"pos": [100, 300],
+		"days": 10,
+		"cost_pp": 15,
+		"action": { "type": "increase_stability", "amount": 0.1 },
+		"desc": "Posters on every wall."
+	  },
+	  {
+		"id": "pol_2",
+		"title": "Secret Police",
+		"prereq": "pol_1",
+		"pos": [400, 300],
+		"days": 20,
+		"cost_pp": 50,
+		"action": { "type": "increase_daily_pp", "amount": 0.05 },
+		"desc": "Silencing dissent increases political power."
+	  }
+	]
+  }
+}

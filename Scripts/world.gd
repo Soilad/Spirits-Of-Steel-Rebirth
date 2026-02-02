@@ -34,14 +34,14 @@ func _ready() -> void:
 	clock.hour_passed.connect(CountryManager._on_hour_passed)
 	clock.day_passed.connect(CountryManager._on_day_passed)
 
-	MapManager.load_country_data()
+	# NOTE(soi):comment this out if ur starting frm the menu
+	# MapManager.load_country_data()
+	# CountryManager.initialize_countries()
 
 	print("World: Map is ready -> configuring visuals...")
 
 	MapManager.all_cities = MapManager.get_all_cities()
 
-	# NOTE(soi): ion think we need this here
-	CountryManager.initialize_countries()
 	if !CountryManager.player_country:
 		CountryManager.set_player_country("brazil")
 	# For debugging purposes. Create some troops first

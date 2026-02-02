@@ -109,10 +109,10 @@ func play_music(track: int):
 	var songs = []
 	for radio in radios:
 		songs.append_array(music_map[track][radio])
+	print(radios)
+	print(songs)
 
-	var song = songs.pick_random()
-	print(song)
-	music_player.stream = song
+	music_player.stream = songs.pick_random()
 	music_player.volume_db = linear_to_db(music_volume_map.get(track, 1.0))
 	music_player.play()
 
