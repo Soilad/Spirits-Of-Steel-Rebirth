@@ -145,9 +145,7 @@ func _ready() -> void:
 				MusicManager.radios.erase(radio)
 			else:
 				MusicManager.radios.append(radio)
-			MusicManager._update_radio()
 			print(MusicManager.radios)
-			print(MusicManager.music_map)
 		)
 		radio_list.add_child(entry)
 	print()

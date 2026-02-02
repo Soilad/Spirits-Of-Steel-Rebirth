@@ -57,7 +57,8 @@ var music_volume_map = {MUSIC.MAIN_THEME: 0.4, MUSIC.BATTLE_THEME: 0.5}
 
 
 func _ready():
-	for radio in radios:
+	const music_path = "res://assets/music/"
+	for radio in DirAccess.open(music_path).get_directories():
 		music_map[MUSIC.MAIN_THEME][radio] = []
 		music_map[MUSIC.BATTLE_THEME][radio] = []
 		_load_music_folder(radio, MUSIC.MAIN_THEME)
@@ -75,14 +76,6 @@ func _ready():
 		sfx_players.append(p)
 
 	play_music(MUSIC.MAIN_THEME)
-
-func _update_radio():
-	music_map = {MUSIC.MAIN_THEME: {}, MUSIC.BATTLE_THEME: {}}
-	for radio in radios:
-		music_map[MUSIC.MAIN_THEME][radio] = []
-		music_map[MUSIC.BATTLE_THEME][radio] = []
-		_load_music_folder(radio, MUSIC.MAIN_THEME)
-		_load_music_folder(radio, MUSIC.BATTLE_THEME)
 
 func _load_music_folder(radio: String, track_enum: int):
 	var path = music_path + radio
@@ -114,8 +107,8 @@ func play_music(track: int):
 	current_track_type = track
 
 	var songs = []
-	for radio in music_map[track].values():
-		songs.append_array(radio)
+	for radio in radios:
+		songs.append_array(music_map[track][radio])
 
 	var song = songs.pick_random()
 	print(song)
