@@ -35,6 +35,7 @@ Console="*uid://ouiu5xh1cs8n"
 AiManager="*res://Managers/AiManager.gd"
 DecisionManager="*res://Managers/DecisionManager.gd"
 EconomyManager="*res://Managers/EconomyManager.gd"
+SuperEventManager="*res://Managers/SuperEventManager.gd"
 
 [display]
 

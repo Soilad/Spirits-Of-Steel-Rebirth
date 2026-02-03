@@ -46,7 +46,7 @@
 		"id": "mil_0",
 		"title": "WORLD WAR 3",
 		"pos": [100, 300],
-		"days": 10,
+		"days": 0,
 		"cost_pp": 20,
 		"action": { "type": "declare_war", "amount": ["china", "india"] },
 		"desc": "Encourage enlistment."

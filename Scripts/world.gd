@@ -34,9 +34,10 @@ func _ready() -> void:
 	clock.hour_passed.connect(CountryManager._on_hour_passed)
 	clock.day_passed.connect(CountryManager._on_day_passed)
 
-	# NOTE(soi):comment this out if ur starting frm the menu
-	# MapManager.load_country_data()
-	# CountryManager.initialize_countries()
+	# NOTE(soi): this is here bcuz sometimes main menu is used and im too lazy to comment this out
+	if MapManager.province_objects.is_empty():
+		MapManager.load_country_data()
+		CountryManager.initialize_countries()
 
 	print("World: Map is ready -> configuring visuals...")
 

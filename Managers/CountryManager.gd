@@ -22,6 +22,9 @@ func _on_day_passed() -> void:
 	for c_name: String in countries:
 		var country_obj: CountryData = countries[c_name]
 		country_obj.process_day()
+	
+	SuperEventManager.check_events()
+	
 	MapManager.country_to_provinces
 
 

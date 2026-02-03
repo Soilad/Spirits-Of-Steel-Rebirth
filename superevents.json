@@ -1,0 +1,9 @@
+{
+  "WW3": {
+		"cause": { "type": "is_at_war", "amount": ["china", "india"] },
+    "background": "ww3",
+    "desc": "holy fucking shit",
+    "button": "AAAAAAAA",
+    "music": "gangnam style"
+  }
+}

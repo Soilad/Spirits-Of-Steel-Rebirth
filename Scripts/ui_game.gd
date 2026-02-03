@@ -139,16 +139,30 @@ func _ready() -> void:
 		entry.text = "\n\n\n" + radio
 		entry.icon = load(music_path + radio + "/thumbnail.png")
 		entry.expand_icon = true
+		entry.set_meta("radio_name", radio)
 		entry.pressed.connect(
 		func(): 
 			if radio in MusicManager.radios:
 				MusicManager.radios.erase(radio)
 			else:
 				MusicManager.radios.append(radio)
+			_update_radio_visuals()
 			print(MusicManager.radios)
 		)
 		radio_list.add_child(entry)
-	print()
+	
+	_update_radio_visuals()
+
+func _update_radio_visuals() -> void:
+	for child in radio_list.get_children():
+		var radio_name = child.get_meta("radio_name", "")
+		if radio_name == "":
+			continue
+			
+		if radio_name in MusicManager.radios:
+			child.modulate = Color.WHITE
+		else:
+			child.modulate = Color(0.5, 0.5, 0.5)
 
 
 
