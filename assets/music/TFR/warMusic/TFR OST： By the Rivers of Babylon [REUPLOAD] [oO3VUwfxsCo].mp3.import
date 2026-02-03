@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://n1hqr1dd1kqg"
+path="res://.godot/imported/TFR OST： By the Rivers of Babylon [REUPLOAD] [oO3VUwfxsCo].mp3-5122b93a57382f0f932668e71f747b85.mp3str"
+
+[deps]
+
+source_file="res://assets/music/TFR/warMusic/TFR OST： By the Rivers of Babylon [REUPLOAD] [oO3VUwfxsCo].mp3"
+dest_files=["res://.godot/imported/TFR OST： By the Rivers of Babylon [REUPLOAD] [oO3VUwfxsCo].mp3-5122b93a57382f0f932668e71f747b85.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

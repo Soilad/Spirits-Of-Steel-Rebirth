@@ -49,6 +49,7 @@ theme_override_fonts/font = ExtResource("3_2njta")
 theme_override_font_sizes/font_size = 16
 text = "War"
 horizontal_alignment = 1
+autowrap_mode = 3
 
 [node name="Button" type="Button" parent="Panel" unique_id=1096516728]
 layout_mode = 1

@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dxedm0qofj8av"
+path="res://.godot/imported/TFR OST： The Fire Rises [Zrysf6Tg2v0].mp3-0b15f441553db1d7fde9ca264736811c.mp3str"
+
+[deps]
+
+source_file="res://assets/music/TFR/gameMusic/TFR OST： The Fire Rises [Zrysf6Tg2v0].mp3"
+dest_files=["res://.godot/imported/TFR OST： The Fire Rises [Zrysf6Tg2v0].mp3-0b15f441553db1d7fde9ca264736811c.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

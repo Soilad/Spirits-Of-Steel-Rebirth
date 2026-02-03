@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dwr1i1usmpus5"
+path="res://.godot/imported/TFR OST： Liberation Funk [yo6IEpbqzoc].mp3-505634b0f7c62c7a0d41f5beb5c6d50a.mp3str"
+
+[deps]
+
+source_file="res://assets/music/TFR/gameMusic/TFR OST： Liberation Funk [yo6IEpbqzoc].mp3"
+dest_files=["res://.godot/imported/TFR OST： Liberation Funk [yo6IEpbqzoc].mp3-505634b0f7c62c7a0d41f5beb5c6d50a.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

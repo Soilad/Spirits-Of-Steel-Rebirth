@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b3vtq54f1p47j"
-valid=false
+uid="uid://cu0vdx31kalku"
+path="res://.godot/imported/artilerija.png-bbf66a228e6629bd8d26c029e32b6d27.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
 source_file="res://assets/superevents/artilerija.png"
+dest_files=["res://.godot/imported/artilerija.png-bbf66a228e6629bd8d26c029e32b6d27.ctex"]
 
 [params]
 

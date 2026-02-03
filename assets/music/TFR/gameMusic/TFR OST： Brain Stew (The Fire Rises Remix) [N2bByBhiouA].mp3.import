@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://cotk4aii55x0f"
+path="res://.godot/imported/TFR OST： Brain Stew (The Fire Rises Remix) [N2bByBhiouA].mp3-6ccb4f89b0bc696eebebf083c7b53d0b.mp3str"
+
+[deps]
+
+source_file="res://assets/music/TFR/gameMusic/TFR OST： Brain Stew (The Fire Rises Remix) [N2bByBhiouA].mp3"
+dest_files=["res://.godot/imported/TFR OST： Brain Stew (The Fire Rises Remix) [N2bByBhiouA].mp3-6ccb4f89b0bc696eebebf083c7b53d0b.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
