@@ -2,7 +2,7 @@ extends Control
 
 @onready var background_rect: TextureRect = $"Panel/background"
 @onready var desc_label: Label = $"Panel/description"
-@onready var button: Button = $"Panel/Button"
+@onready var button: Button = $"Button"
 
 func _ready():
 	button.pressed.connect(_on_button_pressed)

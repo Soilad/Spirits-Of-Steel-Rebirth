@@ -61,19 +61,12 @@ func get_datetime_string() -> String:
 func set_speed(scale: float) -> void:
 	time_scale = clamp(scale, MIN_SPEED, MAX_SPEED)
 	GameState.game_ui.updateProgressBar()
-	if time_scale <= 0:
-		pause()
-
 
 func decrease_speed():
 	set_speed(time_scale - 8)
 
-
 func increase_speed():
 	set_speed(time_scale + 8)
-	if paused:
-		resume()
-
 
 func pause() -> void:
 	paused = true

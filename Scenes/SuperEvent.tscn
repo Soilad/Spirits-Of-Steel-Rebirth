@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://b1l4f6uhouw0j" path="res://Scripts/super_event_popup.gd" id="1_uj0pn"]
 [ext_resource type="Texture2D" uid="uid://lifcljm83dlp" path="res://assets/ui/menu.png" id="2_u72vx"]
 [ext_resource type="FontFile" uid="uid://cee8mbnpx3w3h" path="res://font/arial.TTF" id="3_2njta"]
+[ext_resource type="Theme" uid="uid://c38ivksvf4is0" path="res://main_theme.tres" id="4_ptv18"]
 
 [node name="Alert" type="Control" unique_id=118916730]
 layout_mode = 3
@@ -51,16 +52,18 @@ text = "War"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Button" type="Button" parent="Panel" unique_id=1096516728]
+[node name="Button" type="Button" parent="." unique_id=1096516728]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -36.0
-offset_top = -31.0
-offset_right = 36.0
+offset_left = 155.0
+offset_top = 236.0
+offset_right = 265.0
+offset_bottom = 268.0
 grow_horizontal = 2
 grow_vertical = 0
+theme = ExtResource("4_ptv18")
 text = "Ok"

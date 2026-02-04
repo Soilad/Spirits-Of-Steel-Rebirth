@@ -4,6 +4,8 @@ extends Node
 @export var base_speed: float = 600.0
 
 var is_dragging := false
+const TOP_BAR_HEIGHT = 32
+const MAP_HEIGHT = 625
 
 
 func _process(delta: float) -> void:
@@ -18,6 +20,7 @@ func _is_mouse_over_ui() -> bool:
 
 
 func _input(event: InputEvent) -> void:
+	camera.position.y = clampf(camera.position.y, -TOP_BAR_HEIGHT/camera.zoom.y, -(MAP_HEIGHT + TOP_BAR_HEIGHT)/camera.zoom.y + MAP_HEIGHT)
 
 	if Console.is_visible() or _is_mouse_over_ui():
 		return
@@ -28,9 +31,6 @@ func _input(event: InputEvent) -> void:
 
 	if event is InputEventMouseMotion and is_dragging:
 		camera.position -= event.relative / camera.zoom.x
-		const top_bar_height = 32
-		const map_height = 625
-		camera.position.y = clampf(camera.position.y, -top_bar_height/camera.zoom.y, -(map_height + top_bar_height)/camera.zoom.y + map_height)
 
 	if event is InputEventMouseButton and event.is_pressed():
 		var zoom_dir = 0

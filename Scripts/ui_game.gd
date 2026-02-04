@@ -8,7 +8,7 @@ enum Category { GENERAL, ECONOMY, MILITARY }
 # ── Top Bar Nodes ─────────────────────────────────────
 @onready var nation_flag: TextureRect = $Control/Topbar/nation_flag
 @onready
-var label_date: Label = $Control/Topbar/MarginContainer2/ColorRect/MarginContainer/label_date
+var label_date: Label = $Control/Topbar/MarginContainer2/ColorRect/ProgressBar/label_date
 @onready var stats_labels := {
 	"pp":
 	$Control/Topbar/MarginContainer/HBoxContainer/PoliticalPower/HBoxContainer/label_politicalpower,
@@ -36,8 +36,8 @@ var actions_container: VBoxContainer = $Control/SidemenuBG/Sidemenu/ScrollContai
 @export var action_scene: PackedScene
 
 # ── Speed Controls ────────────────────────────────────
-@onready var plus: Button = $Control/SpeedPanel/GameSpeedControl/PlusPanel/Plus
-@onready var minus: Button = $Control/SpeedPanel/GameSpeedControl/MinusPanel/Minus
+@onready var plus: Button = $Control/Topbar/MarginContainer2/ColorRect/HBoxContainer/GameSpeedControl/Plus
+@onready var minus: Button = $Control/Topbar/MarginContainer2/ColorRect/HBoxContainer/GameSpeedControl/Minus
 @onready var radio_list: VBoxContainer = $Radios
 
 # ── State Variables ───────────────────────────────────
@@ -393,7 +393,7 @@ func updateProgressBar():
 	var bg_style = progress_bar.get_theme_stylebox("background")
 	if clock.paused:
 		bg_style.border_color = Color.DARK_RED
-		label_date.add_theme_color_override("font_color", Color.RED)
+		label_date.add_theme_color_override("font_color", Color.GRAY)
 	else:
 		bg_style.border_color = Color.DARK_CYAN
 		label_date.add_theme_color_override("font_color", Color.WHITE)
@@ -624,15 +624,15 @@ func close_troop_container() -> void:
 # --- References ---
 @onready var military_extra_panel: ColorRect = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel
 @onready
-var input_division: LineEdit = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer/input_division
+var input_division: LineEdit = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/input_division
 @onready var button_train: Button = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/Button_Train
 
 # Grouping UI labels makes them easier to manage
 @onready var ui_labels = {
-	"type": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/label_type,
-	"div_stats": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/label_atkdef,
-	"costs": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer4/label_costs,
-	"manpower": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer4/label_manpower
+	"type": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Type/type,
+	"div_stats": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Stats/amount,
+	"costs": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Cost/amount,
+	"manpower": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Manpower/amount
 }
 
 # --- State ---
