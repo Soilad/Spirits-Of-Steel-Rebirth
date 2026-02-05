@@ -37,13 +37,7 @@ func _check_condition(cause: Dictionary) -> bool:
 	if cause.is_empty():
 		return false
 		
-	match cause.get("type", ""):
-		"is_at_war":
-			var countries = cause.get("amount", []) # ["china", "russia"]
-			if countries.size() == 2:
-				return WarManager.is_at_war_names(countries[0], countries[1])
-				
-	return false
+	return InterpreterManager.get_function(cause)
 
 func _trigger_event(event_id: String, data: Dictionary):
 	triggered_events[event_id] = true

@@ -36,6 +36,7 @@ AiManager="*res://Managers/AiManager.gd"
 DecisionManager="*res://Managers/DecisionManager.gd"
 EconomyManager="*res://Managers/EconomyManager.gd"
 SuperEventManager="*res://Managers/SuperEventManager.gd"
+InterpreterManager="*res://Managers/InterpreterManager.gd"
 
 [display]
 

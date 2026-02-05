@@ -624,15 +624,15 @@ func close_troop_container() -> void:
 # --- References ---
 @onready var military_extra_panel: ColorRect = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel
 @onready
-var input_division: LineEdit = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/input_division
-@onready var button_train: Button = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/Button_Train
+var input_division: LineEdit = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/input_division
+@onready var button_train: Button = $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Button_Train
 
 # Grouping UI labels makes them easier to manage
 @onready var ui_labels = {
-	"type": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Type/type,
-	"div_stats": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Stats/amount,
-	"costs": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Cost/amount,
-	"manpower": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Manpower/amount
+	"type": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Type/type,
+	"div_stats": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Stats/amount,
+	"costs": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Cost/amount,
+	"manpower": $Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Manpower/amount
 }
 
 # --- State ---

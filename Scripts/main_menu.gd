@@ -4,10 +4,8 @@ extends Node
 func _on_quit_pressed() -> void:
 	get_tree().quit()
 
-
 func _on_sfx_changed(value: float) -> void:
 	MusicManager.set_sfx_volume(value)
-
 
 func _on_music_changed(value: float) -> void:
 	MusicManager.set_music_volume(value)

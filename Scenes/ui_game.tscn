@@ -53,11 +53,11 @@ corner_radius_bottom_left = 15
 bg_color = Color(0.20990813, 0.20990813, 0.20990801, 1)
 shadow_color = Color(0, 0, 0, 0.35686275)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qum3k"]
-bg_color = Color(0.22352941, 0.30980393, 0.22352941, 1)
-
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5hlpc"]
 bg_color = Color(0.6313726, 0.6901961, 0.6313726, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qum3k"]
+bg_color = Color(0.22352941, 0.30980393, 0.22352941, 1)
 
 [sub_resource type="GDScript" id="GDScript_lpwmk"]
 
@@ -447,21 +447,25 @@ layout_mode = 2
 
 [node name="MilitaryExtraPanel" type="ColorRect" parent="Control/SidemenuBG/Sidemenu" unique_id=840929467]
 layout_mode = 0
-offset_left = 309.0
-offset_top = 306.0
-offset_right = 613.0
-offset_bottom = 612.0
+offset_left = 310.0
+offset_top = 366.0
+offset_right = 579.0
+offset_bottom = 613.0
 color = Color(0.09803922, 0.09803922, 0.09803922, 1)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel" unique_id=1330084502]
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel" unique_id=1745200345]
 layout_mode = 0
-offset_left = 9.0
-offset_top = 8.0
-offset_right = 291.0
-offset_bottom = 59.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 259.0
+offset_bottom = 237.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=1330084502]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 19
 
-[node name="button_infantry" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer" unique_id=1194038523]
+[node name="button_infantry" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer" unique_id=1194038523]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("16_6c76w")
@@ -469,7 +473,7 @@ icon = ExtResource("19_2igyl")
 icon_alignment = 1
 expand_icon = true
 
-[node name="button_artillery" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer" unique_id=377772696]
+[node name="button_artillery" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer" unique_id=377772696]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("16_6c76w")
@@ -477,7 +481,7 @@ icon = ExtResource("20_patwf")
 icon_alignment = 1
 expand_icon = true
 
-[node name="button_tank" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer" unique_id=1505714444]
+[node name="button_tank" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer" unique_id=1505714444]
 layout_mode = 2
 size_flags_horizontal = 3
 theme = ExtResource("16_6c76w")
@@ -485,65 +489,53 @@ icon = ExtResource("21_qnodh")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Button_Train" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel" unique_id=1300323521]
-layout_mode = 0
-offset_left = 65.0
-offset_top = 241.0
-offset_right = 236.0
-offset_bottom = 281.0
-theme_override_styles/normal = SubResource("StyleBoxFlat_qum3k")
-text = "TRAIN"
-
-[node name="VBoxContainer" type="VBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel" unique_id=1435869281]
-layout_mode = 0
-offset_left = 15.0
-offset_top = 71.0
-offset_right = 274.0
-offset_bottom = 217.0
+[node name="VBoxContainer" type="VBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=1435869281]
+layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/separation = 4
 
-[node name="Type" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=1451488359]
+[node name="Type" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer" unique_id=1451488359]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Type" unique_id=1818920470]
+[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Type" unique_id=1818920470]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Type"
 
-[node name="type" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Type" unique_id=481807798]
+[node name="type" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Type" unique_id=481807798]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_uqxsi")
 text = "infantry"
 
-[node name="Stats" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=405077906]
+[node name="Stats" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer" unique_id=405077906]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Stats" unique_id=1473736820]
+[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Stats" unique_id=1473736820]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Atk / Def / HP"
 
-[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Stats" unique_id=1660878643]
+[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Stats" unique_id=1660878643]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_uqxsi")
 text = "10 : 10 : 100"
 
-[node name="Count" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=6265053]
+[node name="Count" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer" unique_id=6265053]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count" unique_id=1687114061]
+[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count" unique_id=1687114061]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_fonts/font = ExtResource("4_uqxsi")
 text = "Divisions"
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count" unique_id=293571039]
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count" unique_id=293571039]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="input_division" type="LineEdit" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer" unique_id=815402688]
+[node name="input_division" type="LineEdit" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer" unique_id=815402688]
 layout_mode = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_fonts/font = ExtResource("21_qum3k")
@@ -551,11 +543,11 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_5hlpc")
 text = "1"
 virtual_keyboard_type = 2
 
-[node name="VBoxContainer5" type="VBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer" unique_id=343540326]
+[node name="VBoxContainer5" type="VBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer" unique_id=343540326]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="button_add_division" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/VBoxContainer5" unique_id=1572662251]
+[node name="button_add_division" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/VBoxContainer5" unique_id=1572662251]
 clip_contents = true
 layout_mode = 2
 size_flags_vertical = 3
@@ -564,7 +556,7 @@ icon = ExtResource("13_ubr8q")
 icon_alignment = 1
 expand_icon = true
 
-[node name="button_sub_division" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/VBoxContainer5" unique_id=1481647099]
+[node name="button_sub_division" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/VBoxContainer5" unique_id=1481647099]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("13_sdmnd")
@@ -572,29 +564,35 @@ icon = ExtResource("14_pvldk")
 icon_alignment = 1
 expand_icon = true
 
-[node name="Cost" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=693475866]
+[node name="Cost" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer" unique_id=693475866]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Cost" unique_id=1308475392]
+[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Cost" unique_id=1308475392]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Costs training/day:"
 
-[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Cost" unique_id=1340317349]
+[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Cost" unique_id=1340317349]
 layout_mode = 2
 text = "100"
 
-[node name="Manpower" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=612873776]
+[node name="Manpower" type="HBoxContainer" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer" unique_id=612873776]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Manpower" unique_id=1107178966]
+[node name="Label" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Manpower" unique_id=1107178966]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "Manpower:"
 
-[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Manpower" unique_id=1283252395]
+[node name="amount" type="Label" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Manpower" unique_id=1283252395]
 layout_mode = 2
 text = "100"
+
+[node name="Button_Train" type="Button" parent="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer" unique_id=1300323521]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/normal = SubResource("StyleBoxFlat_qum3k")
+text = "TRAIN"
 
 [node name="TroopContainer" type="PanelContainer" parent="Control" unique_id=1621412606]
 layout_mode = 0
@@ -746,12 +744,12 @@ metadata/_custom_type_script = "uid://2mfewdjwki2g"
 [connection signal="button_up" from="Control/SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/DiplomacyMenuButton" to="." method="_on_menu_button_button_up" binds= [0]]
 [connection signal="button_up" from="Control/SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/EconomyMenuButton" to="." method="_on_menu_button_button_up" binds= [1]]
 [connection signal="button_up" from="Control/SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/SideMenuButtons/MilitaryMenuButton" to="." method="_on_menu_button_button_up" binds= [2]]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer/button_infantry" to="." method="_on_division_type_button" binds= ["infantry"]]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer/button_artillery" to="." method="_on_division_type_button" binds= ["artillery"]]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/HBoxContainer/button_tank" to="." method="_on_division_type_button" binds= ["tank"]]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/Button_Train" to="." method="_on_button_train_troops"]
-[connection signal="text_changed" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/input_division" to="." method="_on_input_division_text_changed"]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/VBoxContainer5/button_add_division" to="." method="_on_button_division_change" binds= [1]]
-[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Count/HBoxContainer/VBoxContainer5/button_sub_division" to="." method="_on_button_division_change" binds= [-1]]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer/button_infantry" to="." method="_on_division_type_button" binds= ["infantry"]]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer/button_artillery" to="." method="_on_division_type_button" binds= ["artillery"]]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/HBoxContainer/button_tank" to="." method="_on_division_type_button" binds= ["tank"]]
+[connection signal="text_changed" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/input_division" to="." method="_on_input_division_text_changed"]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/VBoxContainer5/button_add_division" to="." method="_on_button_division_change" binds= [1]]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/VBoxContainer/Count/HBoxContainer/VBoxContainer5/button_sub_division" to="." method="_on_button_division_change" binds= [-1]]
+[connection signal="button_up" from="Control/SidemenuBG/Sidemenu/MilitaryExtraPanel/VBoxContainer/Button_Train" to="." method="_on_button_train_troops"]
 [connection signal="button_up" from="ColorRect/Button" to="ColorRect" method="_on_button_button_up"]
 [connection signal="button_up" from="ColorRect/Button2" to="ColorRect" method="_on_button_2_button_up"]

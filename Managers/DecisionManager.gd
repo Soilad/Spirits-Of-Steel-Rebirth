@@ -105,6 +105,9 @@ func can_take_decision(country: CountryData, cat: String, index: int) -> bool:
 	if country.political_power < data.get("cost_pp", 0):
 		return false
 
+	# 5. Check Cost
+	if data.get("reqs", {}):
+		return InterpreterManager.get_function(data.get("reqs", {}))
 	return true
 
 
@@ -135,26 +138,8 @@ func _finalize_decision(country: CountryData, id: String):
 				_apply_reward(country, node.get("action", {}))
 				return
 
-
 func _apply_reward(country: CountryData, action: Dictionary):
-	match action.get("type", ""):
-		"increase_hourly_money":
-			country.hourly_money_income += action.get("amount", 0)
-		"increase_manpower":
-			country.manpower += action.get("amount", 0)
-		"increase_daily_pp":
-			country.daily_pp_gain += action.get("amount", 0)
-		"increase_stability":
-			country.stability = min(1.0, country.stability + action.get("amount", 0))
-		"army_level_up":
-			country.army_level += 1
-		"build_factory":
-			country.factories_amount += action.get("amount", 1)
-		"declare_war":
-			var countries = action.get("amount", [])
-			if countries.size() == 2:
-				WarManager.declare_war(CountryManager.countries[countries[0]], CountryManager.countries[countries[1]])
-
+	InterpreterManager.get_function(action, country)
 
 # --- HELPERS ---
 func is_in_progress(country: CountryData, id: String) -> bool:
