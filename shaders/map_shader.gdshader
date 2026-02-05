@@ -128,4 +128,10 @@ void fragment() {
             COLOR = country_border_color;
         }
     }
+	
+	// 4. its soilading time
+	COLOR += (1.0+sin(400.0*SCREEN_UV.y+5.0*TIME))/16.0;
+	COLOR *= 4.0*(SCREEN_UV.y-(SCREEN_UV.y*SCREEN_UV.y));
+	COLOR *= 4.0*(SCREEN_UV.x-(SCREEN_UV.x*SCREEN_UV.x));
+        COLOR.a = 1.0;
 }

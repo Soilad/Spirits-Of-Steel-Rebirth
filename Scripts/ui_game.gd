@@ -33,7 +33,7 @@ var actions_container: VBoxContainer = $Control/SidemenuBG/Sidemenu/ScrollContai
 @onready var relations_hbox: HBoxContainer = $Control/SidemenuBG/Sidemenu/PanelContainer/VBoxContainer/RelationsHbox
 
 # Use the class_name of your action scene if available, or load strictly as packed scene
-@export var action_scene: PackedScene
+@export var action_scene: PackedScene = preload("res://Scenes/action.tscn")
 
 # ── Speed Controls ────────────────────────────────────
 @onready var plus: Button = $Control/Topbar/MarginContainer2/ColorRect/HBoxContainer/GameSpeedControl/Plus

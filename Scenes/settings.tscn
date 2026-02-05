@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://i3xg4d4cpxol"]
 
 [ext_resource type="FontFile" uid="uid://c1jnrhadjfe68" path="res://font/Google_Sans/static/GoogleSans-Regular.ttf" id="1_i44u3"]
+[ext_resource type="Material" uid="uid://btordm7082cxn" path="res://damaged.tres" id="1_lhmql"]
 [ext_resource type="Theme" uid="uid://c38ivksvf4is0" path="res://main_theme.tres" id="2_lhmql"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aaqfp"]
@@ -32,6 +33,7 @@ color = Color(0, 0, 0, 0.5019608)
 metadata/_edit_use_anchors_ = true
 
 [node name="PanelContainer2" type="PanelContainer" parent="Settings" unique_id=750041884]
+material = ExtResource("1_lhmql")
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -63,6 +65,7 @@ theme_override_fonts/font = ExtResource("1_i44u3")
 text = "SFX Volume"
 
 [node name="HSlider" type="HSlider" parent="Settings/PanelContainer2/VBoxContainer/SFX" unique_id=160017134]
+material = ExtResource("1_lhmql")
 layout_mode = 2
 max_value = 10.0
 
@@ -72,13 +75,15 @@ layout_mode = 2
 [node name="Label" type="Label" parent="Settings/PanelContainer2/VBoxContainer/Music" unique_id=1494519377]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("1_i44u3")
-text = "MUsic Volume"
+text = "Music Volume"
 
 [node name="HSlider" type="HSlider" parent="Settings/PanelContainer2/VBoxContainer/Music" unique_id=364170525]
+material = ExtResource("1_lhmql")
 layout_mode = 2
 max_value = 10.0
 
 [node name="Exit" type="Button" parent="Settings/PanelContainer2/VBoxContainer" unique_id=1757865940]
+material = ExtResource("1_lhmql")
 layout_mode = 2
 theme = ExtResource("2_lhmql")
 text = "exit
